@@ -18,9 +18,11 @@ public class CameraMovement : StaticInstance<CameraMovement> {
         if (positionsInspector != null) {
             foreach (Transform child in positionsInspector) {
                 Gizmos.color = Color.white;
+                if(child.gameObject.activeInHierarchy)
                 Gizmos.DrawCube(child.position, Vector3.one * 1f);
                 foreach (Transform grandchild in child) {
                     Gizmos.color = Color.red;
+                    if(grandchild.gameObject.activeInHierarchy)
                     Gizmos.DrawCube(grandchild.position, Vector3.one * .5f);
                 }
             }
@@ -35,6 +37,7 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     private void Start() {
         PopulatePlayerPositions();
         _currentPos = _positions[0];
+        _currentView = _positions[0].GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }
 
@@ -53,12 +56,12 @@ public class CameraMovement : StaticInstance<CameraMovement> {
         }
     }
 
-    public void MoveCameraLeft() {
+    public void MoveCameraRight() {
         _viewIndex = (_viewIndex + 1) % _currentPos.childCount;
         _currentView = _currentPos.GetChild(_viewIndex);
     }
 
-    public void MoveCameraRight() {
+    public void MoveCameraLeft() {
         _viewIndex = (_viewIndex - 1 + _currentPos.childCount) % _currentPos.childCount;
         _currentView = _currentPos.GetChild(_viewIndex);
     }
