@@ -59,17 +59,21 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     public void MoveCameraRight() {
         _viewIndex = (_viewIndex + 1) % _currentPos.childCount;
         _currentView = _currentPos.GetChild(_viewIndex);
+        Debug.Log("view Index is: " + _viewIndex);
     }
 
     public void MoveCameraLeft() {
         _viewIndex = (_viewIndex - 1 + _currentPos.childCount) % _currentPos.childCount;
         _currentView = _currentPos.GetChild(_viewIndex);
+        Debug.Log("view Index is: " + _viewIndex);
     }
 
     public void MoveCameraForward() {
         if (_currentView != null && _currentView.GetComponent<LookView>().CanMoveHere != null) {
             _targetPos = _currentView.GetComponent<LookView>().CanMoveHere.transform;
             _currentView = _currentView.GetComponent<LookView>().WillLookHere.transform;
+            _viewIndex = _currentView.GetSiblingIndex();
+        Debug.Log("view Index is: " + _viewIndex);
         }
     }
     public bool CanMoveCameraFoward() {

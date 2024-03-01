@@ -12,7 +12,7 @@ public class DialogueManager : StaticInstance<DialogueManager> {
     private List<DialogueEventSO> playedEvents = new List<DialogueEventSO>();
     public Speaker DialogueSpeaker { get; set; }
     public enum Speaker {
-        PhonePerson,
+        Me,
         DisplayText,
         Outside
     }
@@ -67,9 +67,9 @@ public class DialogueManager : StaticInstance<DialogueManager> {
         //int randomIndex = Random.Range(0, vowels.Length);
         //string selectedVowel = vowels[randomIndex];
         // TODO hardcored player position
-        if (DialogueSpeaker.Equals(Speaker.PhonePerson)) {
-            AudioController.Instance.PlaySound3D("Voice", new Vector3(0, 2.5f, -27), pitch: new AudioParams.Pitch(AudioParams.Pitch.Variation.VerySmall, dialogueText.VoicePitchAdjust),
-                repetition: new AudioParams.Repetition(0.075f * 2), randomization: new AudioParams.Randomization(true), distortion: new AudioParams.Distortion(false, true));
+        if (DialogueSpeaker.Equals(Speaker.Me)) {
+            AudioController.Instance.PlaySound3D("a", new Vector3(0, 2.5f, -27),
+                repetition: new AudioParams.Repetition(0.075f), randomization: new AudioParams.Randomization(true));
         } else if (DialogueSpeaker.Equals(Speaker.DisplayText)) {
             AudioController.Instance.PlaySound2D("Pad", pitch: new AudioParams.Pitch(AudioParams.Pitch.Variation.Small, dialogueText.VoicePitchAdjust),
                repetition: new AudioParams.Repetition(0.075f * 2));

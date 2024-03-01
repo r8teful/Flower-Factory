@@ -6,10 +6,19 @@ public class Flower : Interactable {
 
     [SerializeField] public FlowerType type;
     private MeshRenderer[] _meshRenderer;
-
+    public bool IsCrushMode;
     protected override void OnMouseDown() {
-        if (InventoryHandler.Instance.HoldingObject != null) return;
-        switch (type) {
+        if (IsCrushMode) {
+            if (InventoryHandler.Instance.HoldingObject == null) {
+                // Turn into powder
+                gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                SetMeshRender(false);
+                return;
+            }
+      
+        } else {
+            if (InventoryHandler.Instance.HoldingObject != null) return; // Inventory full
+            switch (type) {
             case FlowerType.Yellow:
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.FYellow;
                 break;
@@ -21,13 +30,14 @@ public class Flower : Interactable {
                 break;
             default:
                 break;
+            }
+            SetMeshRender(false);
+            InventoryHandler.Instance.HoldingObject = gameObject;
         }
-        SetMeshRender(false);
-        InventoryHandler.Instance.HoldingObject = gameObject;
     }
 
     private void Start() {
-        _meshRenderer = gameObject.GetComponentsInChildren<MeshRenderer>();
+        _meshRenderer = gameObject.transform.GetChild(0).GetComponentsInChildren<MeshRenderer>();
     }
 
     public void SetMeshRender(bool b) {

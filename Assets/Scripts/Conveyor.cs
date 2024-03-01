@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conveyor : MonoBehaviour{
+public class Conveyor : ButtonDevice {
 
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Transform _parentMovement;
@@ -10,14 +10,11 @@ public class Conveyor : MonoBehaviour{
     [SerializeField] private float _movementSpeed;
     [SerializeField] private List<GameObject> _flowerPrefabs;
 
-    void Start() {
-        StartCoroutine(SpawnFlowers());
-        
-    }
 
     private void Update() {
         _parentMovement.position += Vector3.right * Time.deltaTime * _movementSpeed;
     }
+
 
     private IEnumerator SpawnFlowers() {
         while (true) {
@@ -27,5 +24,10 @@ public class Conveyor : MonoBehaviour{
             Destroy(i, 20f);
             yield return new WaitForSeconds(_spawnDelay+ Random.Range(0,2));
         }
+    }
+
+    public override void ButtonClicked() {
+        StartCoroutine(SpawnFlowers());
+        FlowerSortManager.Instance.GameStarted = true;
     }
 }
