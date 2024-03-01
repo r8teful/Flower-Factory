@@ -11,7 +11,10 @@ public class CursorManager : StaticInstance<CursorManager>{
         PointRight,
         PointDown,
         PointUp,
-        Look
+        Look,
+        FBlue,
+        FRed,
+        FYellow
     }
 
     [SerializeField] private List<Texture2D> cursorTextures;
@@ -22,6 +25,7 @@ public class CursorManager : StaticInstance<CursorManager>{
         get { return _currentCursorType; }
         set {
             if (_currentCursorType != value) {
+                if (InventoryHandler.Instance.HoldingObject != null) return;
                 _currentCursorType = value;
                 UpdateCursor();
             }
