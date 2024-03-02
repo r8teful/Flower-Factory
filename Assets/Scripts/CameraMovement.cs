@@ -21,8 +21,11 @@ public class CameraMovement : StaticInstance<CameraMovement> {
                 if(child.gameObject.activeInHierarchy)
                 Gizmos.DrawCube(child.position, Vector3.one * 1f);
                 foreach (Transform grandchild in child) {
-                    Gizmos.color = Color.red;
-                    if(grandchild.gameObject.activeInHierarchy)
+                    Gizmos.color = Color.blue;
+                    if(grandchild.GetComponent<LookView>().CanMoveHere != null) Gizmos.color = Color.green;
+                    if(grandchild.GetComponent<LookView>().CanMoveHere != null ^ grandchild.GetComponent<LookView>().WillLookHere != null) Gizmos.color = Color.red;
+                    if (grandchild.GetComponent<LookView>().ConditionalMove) Gizmos.color = Color.magenta;
+                    if (grandchild.gameObject.activeInHierarchy)
                     Gizmos.DrawCube(grandchild.position, Vector3.one * .5f);
                 }
             }
@@ -69,9 +72,11 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     }
 
     public void MoveCameraForward() {
-        if (_currentView != null && _currentView.GetComponent<LookView>().CanMoveHere != null) {
-            _targetPos = _currentView.GetComponent<LookView>().CanMoveHere.transform;
-            _currentView = _currentView.GetComponent<LookView>().WillLookHere.transform;
+        var lw = _currentView.GetComponent<LookView>();
+        if (_currentView != null && lw.CanMoveHere != null && !lw.ConditionalMove) {
+
+            _targetPos = lw.CanMoveHere.transform;
+            _currentView = lw.WillLookHere.transform;
             _viewIndex = _currentView.GetSiblingIndex();
         Debug.Log("view Index is: " + _viewIndex);
         }

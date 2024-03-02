@@ -6,4 +6,6 @@ public class LookView : MonoBehaviour {
     public GameObject CanMoveHere;
     // Will look at this object when we move to CanMoveHere
     public GameObject WillLookHere;
+
+    public bool ConditionalMove;
 }
