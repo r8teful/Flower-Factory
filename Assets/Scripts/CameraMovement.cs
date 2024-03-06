@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CameraMovement : StaticInstance<CameraMovement> {
     private List<Transform> _positions = new(); 
-    [SerializeField] private Transform positionsInspector; 
+    [SerializeField] private Transform positionsInspector;
     [SerializeField] private float _lookSpeed;
     [SerializeField] private float _moveSpeed;
     // Pos is a node, view is an edge
