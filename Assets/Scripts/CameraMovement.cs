@@ -40,7 +40,11 @@ public class CameraMovement : StaticInstance<CameraMovement> {
                 foreach (Transform grandchild in child) {
                     Gizmos.color = Color.blue;
                     if(grandchild.GetComponent<LookView>().CanMoveHere != null) Gizmos.color = Color.green;
-                    if(grandchild.GetComponent<LookView>().CanMoveHere != null ^ grandchild.GetComponent<LookView>().WillLookHere != null) Gizmos.color = Color.red;
+                    if (grandchild.GetComponent<LookView>().CanMoveHere != null ^ grandchild.GetComponent<LookView>().WillLookHere != null) Gizmos.color = Color.red;
+                    if(grandchild.GetComponent<LookView>().CanMoveHere != null && grandchild.GetComponent<LookView>().WillLookHere != null) {
+                        // Todo also red if two have the same transform
+                        if (grandchild.GetComponent<LookView>().CanMoveHere != grandchild.GetComponent<LookView>().WillLookHere.transform.parent.gameObject) Gizmos.color = Color.red;
+                    }
                     if (grandchild.GetComponent<LookView>().ConditionalMove) Gizmos.color = Color.magenta;
                     if (grandchild.gameObject.activeInHierarchy)
                     Gizmos.DrawCube(grandchild.position, Vector3.one * .5f);
@@ -60,8 +64,8 @@ public class CameraMovement : StaticInstance<CameraMovement> {
 
     private void Start() {
         PopulatePlayerPositions();
-        //_currentPos = _positions[_positions.Count-1];
-        _currentPos = _positions[0];
+        _currentPos = _positions[_positions.Count-3];
+        //_currentPos = _positions[0];
         CurrentView = _currentPos.GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }
