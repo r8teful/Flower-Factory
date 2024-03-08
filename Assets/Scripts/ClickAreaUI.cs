@@ -10,6 +10,8 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
     private Image _image;
     private bool _canInteract = true;
 
+    // Todo we have to set interactions true or false depening on the state we are on CameraMovement
+    // For example, if we are peeking we only show back, only show forward if we can go forward etc etc.
     public bool CanInteract {
         get { return _canInteract; }
         set { _canInteract = value;
@@ -22,7 +24,7 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-        if (!_canInteract) return;
+       // if (!_canInteract) return;
         switch (movementDirection) {
             case MovementDirection.Left:
                 CameraMovement.Instance.MoveCameraLeft();
@@ -31,7 +33,7 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
                 CameraMovement.Instance.MoveCameraRight();
                 break;
             case MovementDirection.Down:
-                CanInteract = false;
+                CameraMovement.Instance.CameraPeekBack();
                 break;
             case MovementDirection.Forward:
                 CameraMovement.Instance.MoveCameraForward();
@@ -42,44 +44,57 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        if (!_canInteract) return; 
+        //if (!_canInteract) return; 
+        UpdateCursor();
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
         switch (movementDirection) {
             case MovementDirection.Left:
-                CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointLeft;
+                if (CursorManager.Instance.CurrentCursorType.Equals(CursorManager.CursorType.PointLeft))
+                    CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
                 break;
             case MovementDirection.Right:
-                CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointRight;
+                if (CursorManager.Instance.CurrentCursorType.Equals(CursorManager.CursorType.PointRight))
+                    CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
                 break;
             case MovementDirection.Down:
-                CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointDown;
+                if (CursorManager.Instance.CurrentCursorType.Equals(CursorManager.CursorType.PointDown))
+                    CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
                 break;
             case MovementDirection.Forward:
-                if(!CameraMovement.Instance.CanMoveCameraFoward()) return;
-                CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointUp;
+                if (CursorManager.Instance.CurrentCursorType.Equals(CursorManager.CursorType.PointUp))
+                    CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
                 break;
             default:
+                // Todo add other?
                 break;
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData) {
-        CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
+
+public void OnPointerMove(PointerEventData eventData) {
+        //if (!_canInteract) return;
+        UpdateCursor();
     }
 
-    public void OnPointerMove(PointerEventData eventData) {
-        if (!_canInteract) return;
+    // TODO Right now we just don't show the cursor update, but the collider itself is there, and we will still call the CameraMovement Methods BAD
+    private void UpdateCursor() {
         switch (movementDirection) {
             case MovementDirection.Left:
+                if (!CameraMovement.Instance.CanTurnLeftOrRight()) return;
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointLeft;
                 break;
             case MovementDirection.Right:
+                if (!CameraMovement.Instance.CanTurnLeftOrRight()) return;
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointRight;
                 break;
             case MovementDirection.Down:
+                if (!CameraMovement.Instance.CanTurnBackward()) return;
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointDown;
                 break;
             case MovementDirection.Forward:
-                if (!CameraMovement.Instance.CanMoveCameraFoward()) return;
+                if (!CameraMovement.Instance.CanMoveFoward()) return;
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointUp;
                 break;
             default:

@@ -26,6 +26,7 @@ public class CursorManager : StaticInstance<CursorManager>{
         set {
             if (_currentCursorType != value) {
                 if (InventoryHandler.Instance.HoldingObject != null) return;
+                //Debug.Log("CURSOR TYPE: " + value);
                 _currentCursorType = value;
                 UpdateCursor();
             }

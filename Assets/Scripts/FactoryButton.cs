@@ -9,6 +9,7 @@ public class FactoryButton : Interactable {
 
     protected override void OnMouseDown() {
         if (_hasPressed) return;
+        if (_connectedDevice == null) return;
         mButton.ActivateButton();
         _connectedDevice.ButtonClicked();
         _hasPressed = true;

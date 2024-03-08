@@ -6,7 +6,7 @@ public class MovingButton : MonoBehaviour {
     private float moveSpeed = 0.6f; // Speed of movement
     private bool isMoving = false;
     private Vector3 originalPosition;
-
+    [SerializeField] private bool _isRight;
     private void Start() {
         originalPosition = transform.position;
     }
@@ -18,9 +18,14 @@ public class MovingButton : MonoBehaviour {
             StartCoroutine(MoveButton());
         }
     }
-
+   
     private IEnumerator MoveButton() {
-        Vector3 targetPosition = originalPosition + Vector3.forward * moveDistance;
+        Vector3 targetPosition = Vector3.zero;
+        if (_isRight) { 
+            targetPosition = originalPosition + Vector3.right * moveDistance;
+        } else {
+            targetPosition = originalPosition + Vector3.forward * moveDistance;
+        }
 
         while (Vector3.Distance(transform.position, targetPosition) > 0.0001f) {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
