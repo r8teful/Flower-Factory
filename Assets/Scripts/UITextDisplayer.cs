@@ -7,7 +7,6 @@ public class UITextDisplayer : StaticInstance<UITextDisplayer> {
     private GameObject _officeText;
     [SerializeField] private Transform _officeTextPosDisplay;
 
-
     private void Start() {
         CameraMovement.CurrentCameraPos += CameraPosChanged;
         _officeText = transform.GetChild(0).gameObject;
@@ -17,22 +16,13 @@ public class UITextDisplayer : StaticInstance<UITextDisplayer> {
     private void OnDestroy() => CameraMovement.CurrentCameraPos -= CameraPosChanged;
 
     private void CameraPosChanged(Transform t) {
+        // If we are showing the text, and the cameraPos has changed, it means we moved away from the text thing
+        if (_officeText.activeSelf) {
+            _officeText.SetActive(false);
+        }
         if (t == _officeTextPosDisplay) {
-            // Camera pos matches display pos
-            Debug.Log("IT WORKED!");
             _officeText.SetActive(true);
-            StartCoroutine(WaitUntilMoved());
         }
     }
-
-    private IEnumerator WaitUntilMoved() {
-        // TODO write it here and done!
-        yield return null;
-    }
-
-    public void DisplayOfficeText(bool b) {
-        _officeText.SetActive(b);
-    }
-
 
 }

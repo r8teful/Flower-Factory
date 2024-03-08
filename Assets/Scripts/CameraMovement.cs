@@ -20,6 +20,16 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     private bool _peeking;
 
     public static event Action<Transform> CurrentCameraPos;
+    public static event Action<Transform> CurrentCameraView;
+    public Transform CurrentView {
+        get { return _currentView; }
+        set {
+            _currentView = value;
+            CurrentCameraView?.Invoke(value);
+        }
+    }
+
+    public bool LockMovement { get; set; }
 
     private void OnDrawGizmos() {
         if (positionsInspector != null) {
@@ -52,7 +62,7 @@ public class CameraMovement : StaticInstance<CameraMovement> {
         PopulatePlayerPositions();
         //_currentPos = _positions[_positions.Count-1];
         _currentPos = _positions[0];
-        _currentView = _currentPos.GetChild(_viewIndex);
+        CurrentView = _currentPos.GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }
 
@@ -66,44 +76,46 @@ public class CameraMovement : StaticInstance<CameraMovement> {
                 _targetPos = null;
             }
         }
-        if (_currentView != null) {
-            var rotation = Quaternion.LookRotation(_currentView.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,Time.deltaTime *_lookSpeed); 
+        if (CurrentView != null) {
+            var rotation = Quaternion.LookRotation(CurrentView.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,Time.deltaTime *_lookSpeed);
         }
     }
 
     public void MoveCameraRight() {
         if (_targetPos != null || _peeking) return;
         _viewIndex = (_viewIndex + 1) % _currentPos.childCount;
-        _currentView = _currentPos.GetChild(_viewIndex);
+        CurrentView = _currentPos.GetChild(_viewIndex);
     }
 
     public void MoveCameraLeft() {
         if (_targetPos != null || _peeking) return;
         _viewIndex = (_viewIndex - 1 + _currentPos.childCount) % _currentPos.childCount;
-        _currentView = _currentPos.GetChild(_viewIndex);
+        CurrentView = _currentPos.GetChild(_viewIndex);
     }
 
     public void MoveCameraForward() {
         if (_peeking) return;
-        var lw = _currentView.GetComponent<LookView>();
-        if (_currentView != null && lw.CanMoveHere != null && !lw.ConditionalMove) {
+        if (_targetPos != null) return; // Still moving
+        if (LockMovement) return; // Used by elevator
+        var lw = CurrentView.GetComponent<LookView>();
+        if (CurrentView != null && lw.CanMoveHere != null && !lw.ConditionalMove) {
 
             _targetPos = lw.CanMoveHere.transform;
-            _currentView = lw.WillLookHere.transform;
-            _viewIndex = _currentView.GetSiblingIndex();
+            CurrentView = lw.WillLookHere.transform;
+            _viewIndex = CurrentView.GetSiblingIndex();
         }
     }
 
     public void CameraPeek() {
-        if (_currentView == null || _peeking) return;
-        if (_currentView.childCount <= 0) return;
+        if (CurrentView == null || _peeking) return;
+        if (CurrentView.childCount <= 0) return;
         // Save current pos and view so we can go back to it later
         _prevPos = _currentPos;
-        _prevView = _currentView;
+        _prevView = CurrentView;
         Debug.Log("PEEKING");
-        _targetPos = _currentView.GetChild(0); // View should always be on second child
-        _currentView = _currentView.GetChild(1); // View should always be on second child
+        _targetPos = CurrentView.GetChild(0); // View should always be on second child
+        CurrentView = CurrentView.GetChild(1); // View should always be on second child
         // Set position and rotation the one of the peekView
         // Say that we are peeking, only way rotate, or move, is going back
         _peeking = true;
@@ -114,14 +126,14 @@ public class CameraMovement : StaticInstance<CameraMovement> {
         Debug.Log("PeekBack");
         // Go back to prev view and pos
         _targetPos = _prevPos;
-        _currentView = _prevView;
+        CurrentView = _prevView;
         _prevPos = null;
         _prevView = null;
         _peeking = false;
     }
 
     public bool CanMoveFoward() {
-        if (_currentView != null && _currentView.GetComponent<LookView>().CanMoveHere != null) {
+        if (CurrentView != null && CurrentView.GetComponent<LookView>().CanMoveHere != null) {
             return true;
         }
         return false;
@@ -139,8 +151,8 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     }
 
     public bool CanPeek() {
-        if (_currentView == null || _peeking) return false;
-        if (_currentView.childCount <= 0) return false;
+        if (CurrentView == null || _peeking) return false;
+        if (CurrentView.childCount <= 0) return false;
         return true;
     }
 }

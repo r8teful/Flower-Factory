@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
   m_Name: Intro0
   m_EditorClassIdentifier: 
-  interruptBehaviour: 0
+  interruptBehaviour: 1
   lines:
   - Another day at work[w:2]

@@ -8,17 +8,17 @@ public class ConveyorThree : ButtonDevice {
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _spawnDelay;
     [SerializeField] private List<GameObject> _flowerPrefabs;
-
+    public bool FlowerSupply { get; set; }
     private void Update() {
         _parentMovement.position += Vector3.back * Time.deltaTime * _movementSpeed;
     }
 
     private void Start() {
 
-        StartCoroutine(SpawnFlowers());
+       // StartCoroutine(SpawnFlowers());
     }
     private IEnumerator SpawnFlowers() {
-        while (true) {
+        while (FlowerSupply) {
             for (int i = 0; i < _flowerPrefabs.Count; i++) {        
                 var rotation = Quaternion.Euler(150, -90, 180 +Random.Range(-20, 20));
                 var p = Instantiate(_flowerPrefabs[i], _spawnPoints[i].position, rotation, _parentMovement);
@@ -30,8 +30,9 @@ public class ConveyorThree : ButtonDevice {
     }
 
     public override void ButtonClicked() {
+        FlowerSupply = true;
         // Check first if we have done sorting first
-        //if(!FlowerSortManager.Instance.GameStarted) return;
+        if (!FlowerSortManager.Instance.GameStarted) return;
         StartCoroutine(SpawnFlowers());
     }
 

@@ -9,7 +9,7 @@ public class Conveyor : ButtonDevice {
     [SerializeField] private float _spawnDelay;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private List<GameObject> _flowerPrefabs;
-
+    public bool FlowerSupply { get; set; }
 
     private void Update() {
         _parentMovement.position += Vector3.right * Time.deltaTime * _movementSpeed;
@@ -17,7 +17,7 @@ public class Conveyor : ButtonDevice {
 
 
     private IEnumerator SpawnFlowers() {
-        while (true) {
+        while (FlowerSupply) {
             int r = Random.Range(0, 3);
             var rotation = Quaternion.Euler(90, -180, Random.Range(-20, 20));
             var i = Instantiate(_flowerPrefabs[r], _spawnPoint.position, rotation, _parentMovement);
@@ -27,6 +27,7 @@ public class Conveyor : ButtonDevice {
     }
 
     public override void ButtonClicked() {
+        FlowerSupply = true;
         StartCoroutine(SpawnFlowers());
         FlowerSortManager.Instance.GameStarted = true;
     }

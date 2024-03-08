@@ -6,6 +6,7 @@ public class Elevator : ButtonDevice {
     private bool _doorsMoving;
     public bool ElevatorMoving { get; private set; }
 
+    private FactoryButton _fb;
     private bool _actived;
     private float _timeMoved;
     [SerializeField] private bool _startOpen;
@@ -17,18 +18,19 @@ public class Elevator : ButtonDevice {
     private void Start() {
         _door1ClosedPos = transform.GetChild(0).localPosition;
         _door2ClosedPos = transform.GetChild(1).localPosition;
+        _fb = GetComponentInChildren<FactoryButton>();
         if(_startOpen) {
             transform.GetChild(0).localPosition = _door1OpenPos.localPosition;
             transform.GetChild(1).localPosition = _door2OpenPos.localPosition;
         }
     }
     public void OpenDoors() {
-        // TODO lock movement?
         _doorsMoving = true;
         StartCoroutine(MoveDoorsToPositions(_door1OpenPos.localPosition, _door2OpenPos.localPosition));
     }
 
     public void CloseDoors() {
+        CameraMovement.Instance.LockMovement = true;
         _doorsMoving = true;
         StartCoroutine(MoveDoorsToPositions(_door1ClosedPos, _door2ClosedPos));
     }
@@ -59,5 +61,9 @@ public class Elevator : ButtonDevice {
             _actived = true;
             // Load overground again
         }
+    }
+
+    public void AllowButtonClick(bool b) {
+        _fb.AllowPress = b;
     }
 }

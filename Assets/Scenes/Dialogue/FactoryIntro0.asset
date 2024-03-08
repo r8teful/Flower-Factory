@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
-  m_Name: Lobby0
+  m_Name: FactoryIntro0
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - Security must have locked the door.[w:1] The key should be in here [w:2]
+  - That elevator is always so,[w:0.1][t:15] slow[w:1]

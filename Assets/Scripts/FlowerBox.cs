@@ -19,7 +19,7 @@ public class FlowerBox : Interactable {
             f.gameObject.AddComponent<Rigidbody>();
             InventoryHandler.Instance.HoldingObject = null;
             CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
-            FlowerSortManager.Instance.AddPoints();
+            FlowerSortManager.Instance.AddPointsSort();
             Destroy(f.gameObject, 2);
         }
     }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FlowerSortSequence : Sequencer {
+    [SerializeField] private ConveyorThree _conveyorThree;
+    [SerializeField] private Conveyor _conveyorSort;
+    [SerializeField] private Elevator _elevator;
     protected override IEnumerator Sequence() {
         // Enter, wait for the lights to be pressed
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
@@ -10,19 +13,30 @@ public class FlowerSortSequence : Sequencer {
         yield return new WaitUntil(() => FlowerSortManager.Instance.GameStarted);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[1]);
 
-        // Wait for x amount of flowers to be sorted correctly
-        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+        // Sorting flowers
+        yield return new WaitUntil(() => FlowerSortManager.Instance.AmountSorted > 2);
 
-        // BANG
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[2]);
+        // wait before we say anything
 
-        // Wait for press button again
+        // BANG, stop supply
+        _conveyorSort.FlowerSupply = false;
 
-        // Go to next task
-
+        // Start next task
+        _conveyorThree.ButtonClicked();
         // Wait for x amount of flowers to be crushed
 
-        // Checkup on mates
+        yield return new WaitUntil(() => FlowerSortManager.Instance.AmountCrushed > 2);
+        _conveyorThree.FlowerSupply = false;
+        // todo Probably wait a few seconds here
+
+        // Huh, it stoped. Checkup on boss
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[3]);
 
         // DONE
+        _elevator.AllowButtonClick(true);
+        yield return new WaitUntil(() => _elevator.ElevatorMoving);
+        yield return new WaitForSeconds(10);
+        SceneHandler.Instance.LoadOverGround();
     }
 }

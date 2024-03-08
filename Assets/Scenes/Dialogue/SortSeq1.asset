@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - wow[w:0.5] I turned the lights on
+  - wow[w:0.5] I press the button [w:2]

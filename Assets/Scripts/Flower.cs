@@ -13,6 +13,7 @@ public class Flower : Interactable {
                 // Turn into powder
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 SetMeshRender(false);
+                FlowerSortManager.Instance.AddPointsCrushed();
                 return;
             }
       
