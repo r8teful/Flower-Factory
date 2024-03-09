@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MovingButton : MonoBehaviour {
     private float moveDistance = 0.16f; // Distance to move along the z-axis
-    private float moveSpeed = 0.6f; // Speed of movement
+    private float moveSpeed = 1.2f; // Speed of movement
     private bool isMoving = false;
     private Vector3 originalPosition;
     [SerializeField] private bool _isRight;

@@ -15,12 +15,28 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
     public bool CanInteract {
         get { return _canInteract; }
         set { _canInteract = value;
-        _image.enabled = value;
+        if(_image == null) _image = GetComponent<Image>();
+            _image.enabled = value;
         }
     }
 
     private void Awake() {
         _image = GetComponent<Image>();
+        CameraMovement.CurrentCameraPos += OnCameraMoved;
+    }
+    private void OnDestroy() {
+        CameraMovement.CurrentCameraPos -= OnCameraMoved;
+    }
+
+    private void OnCameraMoved(Transform t) {
+        // We are on a peekpos, and we should enable down image
+        if (movementDirection.Equals(MovementDirection.Down)) {
+            if (t.CompareTag("PeekPos")) {
+                CanInteract = true;
+                } else {
+                CanInteract = false;
+            }
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData) {

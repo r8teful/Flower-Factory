@@ -12,7 +12,9 @@ public class OfficeDoor : Interactable {
     private void Start() {
         CameraMovement.CurrentCameraView+= CameraViewChanged;
         _door = transform.GetChild(1);
-        _door.localRotation = Quaternion.identity;
+        if(GameManager.Instance.PlayerProgression < 2) {
+            _door.localRotation = Quaternion.identity;
+        }
     }
 
 

@@ -9,6 +9,13 @@ public class DoubleDoor : MonoBehaviour {
     [SerializeField] private Transform _toOpenDoor;
 
     [SerializeField] private bool _conditionalOpen;
+    public bool ConditionalOpen {
+        get { return _conditionalOpen; }
+        set { _conditionalOpen = value;
+        }
+    }
+
+
     private readonly Vector3 _door1ClosedPos = Vector3.zero;
     private readonly Vector3 _door2ClosedPos = new Vector3(0, -0.15f, -1.5f);
     private float _timeMoved;

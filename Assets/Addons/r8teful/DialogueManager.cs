@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueManager : PersistentSingleton<DialogueManager> {
+public class DialogueManager : Singleton<DialogueManager> {
     public bool NoDialoguePlaying => eventStack.Count == 0;
     public DialogueEventSO CurrentEvent => NoDialoguePlaying ? null : eventStack.Peek();
 

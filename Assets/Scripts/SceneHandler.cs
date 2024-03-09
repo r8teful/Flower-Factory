@@ -28,5 +28,14 @@ public class SceneHandler : PersistentSingleton<SceneHandler> {
         }
         // Use  asyncLoad.allowSceneActivation = false; to handle when you change the scene 
     }
-
+    private void Update() {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            LoadUnderGround();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            LoadOverGround();
+        }
+# endif
+    }
 }
