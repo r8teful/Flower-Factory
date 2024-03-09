@@ -31,11 +31,9 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
     private void OnCameraMoved(Transform t) {
         // We are on a peekpos, and we should enable down image
         if (movementDirection.Equals(MovementDirection.Down)) {
-            if (t.CompareTag("PeekPos")) {
-                CanInteract = true;
-                } else {
-                CanInteract = false;
-            }
+            CanInteract = t.CompareTag("PeekPos");
+        } else {
+            CanInteract = !t.CompareTag("PeekPos");
         }
     }
 

@@ -7,6 +7,7 @@ public class GameManager : PersistentSingleton<GameManager> {
 #if UNITY_EDITOR
     [SerializeField] private bool debugStartFlowerSeq;
     [SerializeField] private GameObject _flowerSortSequencer;
+    //private GameObject _officeSequence;
 #endif
     [SerializeField] private int[] _code;
     public int[] Code { get { return _code; } private set { _code = value; } }
@@ -40,7 +41,9 @@ public class GameManager : PersistentSingleton<GameManager> {
         }
 #endif
         //OnSceneLoad(SceneManager.GetActiveScene(),LoadSceneMode.Single);
-        
+        if (SceneHandler.Instance.IsOverWorld()) {
+            GameObject.Find("LobbySequence").GetComponent<LobbySequence>().enabled = true;
+        }
 
         SceneManager.sceneLoaded += OnSceneLoad;
     }
@@ -50,18 +53,25 @@ public class GameManager : PersistentSingleton<GameManager> {
         Debug.Log(_playerProgression);
         if (_playerProgression == 1) {
             // Underground first time
+            GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = true;
         }
         if (_playerProgression == 2) {
-            // Overground second time
+            // Overground second time bug prone but I dont care
+            GameObject.Find("OfficeSequence").GetComponent<OfficeSequence>().enabled = true;
+            GameObject.Find("MiddleRoom").transform.GetChild(0).GetComponent<LookView>().ConditionalMove = false;
+            GameObject.Find("Hallway1").transform.GetChild(3).GetComponent<LookView>().ConditionalMove = false;
             AdjustLamps();
             OpenOffice();
         }
         if (_playerProgression == 3) {
             // Underground second time
+            // todo actiavte other sequence, etc etc.
+            GameObject.Find("ControlRoomSequence").GetComponent<ControlRoomSequence>().enabled = true;
+
+        }
 
             // Always overworld specific things 
-            if (SceneHandler.Instance.IsOverWorld()) {
-            }
+        if (SceneHandler.Instance.IsOverWorld()) {
         }
     }
 

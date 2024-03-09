@@ -68,7 +68,7 @@ public class DialogueManager : Singleton<DialogueManager> {
         //string selectedVowel = vowels[randomIndex];
         // TODO hardcored player position
         if (DialogueSpeaker.Equals(Speaker.Me)) {
-            AudioController.Instance.PlaySound3D("a", new Vector3(0, 2.5f, -27),
+            AudioController.Instance.PlaySound2D("a",
                 repetition: new AudioParams.Repetition(0.075f), randomization: new AudioParams.Randomization(true));
         } else if (DialogueSpeaker.Equals(Speaker.DisplayText)) {
             AudioController.Instance.PlaySound2D("Pad", pitch: new AudioParams.Pitch(AudioParams.Pitch.Variation.Small, dialogueText.VoicePitchAdjust),

@@ -50,7 +50,7 @@ public class CameraMovement : StaticInstance<CameraMovement> {
                     Gizmos.DrawCube(grandchild.position, Vector3.one * .5f);
                     foreach (Transform grandgrandchild in grandchild) {
                         Gizmos.color = Color.cyan;
-                        Gizmos.DrawCube(grandgrandchild.position, Vector3.one * .5f);
+                        Gizmos.DrawCube(grandgrandchild.position, Vector3.one * .05f);
                     }
                 }
             }
@@ -64,8 +64,8 @@ public class CameraMovement : StaticInstance<CameraMovement> {
 
     private void Start() {
         PopulatePlayerPositions();
-        _currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
-        //_currentPos = _positions[0];
+        //_currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
+        _currentPos = _positions[_positions.Count-1];
         CurrentView = _currentPos.GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }
@@ -117,7 +117,6 @@ public class CameraMovement : StaticInstance<CameraMovement> {
         // Save current pos and view so we can go back to it later
         _prevPos = _currentPos;
         _prevView = CurrentView;
-        Debug.Log("PEEKING");
         _targetPos = CurrentView.GetChild(0); // View should always be on second child
         CurrentView = CurrentView.GetChild(1); // View should always be on second child
         // Set position and rotation the one of the peekView
@@ -127,7 +126,6 @@ public class CameraMovement : StaticInstance<CameraMovement> {
 
     public void CameraPeekBack() {
         if (!_peeking) return;
-        Debug.Log("PeekBack");
         // Go back to prev view and pos
         _targetPos = _prevPos;
         CurrentView = _prevView;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Elevator : ButtonDevice {
     private bool _doorsMoving;
-    public bool ElevatorMoving { get; private set; }
+    public bool ElevatorMoving { get; set; }
 
     private FactoryButton _fb;
     private bool _actived;
