@@ -4,7 +4,7 @@ using UnityEngine;
 
 // It's 23PM and I just want this to work 
 public class MovingButtonLocal : MonoBehaviour {
-    private float moveDistance = 0.3f; // Distance to move along the z-axis
+    private float moveDistance = 0.1f; // Distance to move along the z-axis
     private float moveSpeed = 2f; // Speed of movement
     private bool isMoving = false;
     private Vector3 originalPosition;

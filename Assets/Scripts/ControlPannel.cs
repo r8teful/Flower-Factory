@@ -17,6 +17,10 @@ public class ControlPannel : MonoBehaviour {
     [SerializeField] private GameObject _ButtonPuzzle0;
     [SerializeField] private GameObject _ButtonPuzzle1;
     [SerializeField] private GameObject _ButtonPuzzle2;
+    [SerializeField] private GameObject _emergencyObject;
+    [SerializeField] private GameObject _emergencyGuide;
+    [SerializeField] private GameObject _varificationCompleteText;
+    [SerializeField] private GameObject _sedativeLevelParent;
 
     private Slider[] _puzzleSliders;
     private RawImage[] _sliderProgress;
@@ -36,6 +40,8 @@ public class ControlPannel : MonoBehaviour {
     private int _buttonsClicked;
     private bool _buttonPuzzle;
     private bool _passed;
+    public bool MinigameStarted { get; set; }
+    public bool SequenceComplete { get; private set; }
 
     private void Awake() {
         // uggliest awake method in excistence
@@ -116,7 +122,6 @@ public class ControlPannel : MonoBehaviour {
             if(buttonIndex == _buttonPuzzleIndex) {
                 // Check if all the sliders are good
                 for (int i = 0; i < 3; i++) if (_sliderProgress[i].enabled) return;
-                Debug.Log("Stage complete!");
                 _stages[_currentStageIndex] = true;
             }
         }
@@ -142,11 +147,9 @@ public class ControlPannel : MonoBehaviour {
         if(_currentStageIndex==3) {
             _buttonsClicked++;
             if (buttonIndex == sequence1[_buttonsClicked - 1]) {
-                Debug.Log("pass");
                 _progressionSquare1[_buttonsClicked - 1].enabled = false;
                 _passed = true;
             } else {
-                Debug.Log("failed");
                 _passed = false;
                 ResetProgress();
             }
@@ -159,11 +162,9 @@ public class ControlPannel : MonoBehaviour {
         if (_currentStageIndex == 4) {
             _buttonsClicked++;
             if (buttonIndex == sequence2[_buttonsClicked - 1]) {
-                Debug.Log("pass");
                 _progressionSquare2[_buttonsClicked - 1].enabled = false;
                 _passed = true;
             } else {
-                Debug.Log("failed");
                 _passed = false;
                 ResetProgress();
             }
@@ -195,8 +196,34 @@ public class ControlPannel : MonoBehaviour {
     }
 
     private IEnumerator MiniGameSequence() {
+        // Ensure everything is hidden
+        _sedativeLevelParent.SetActive(false);
+        _progressionRectanglesParent.gameObject.SetActive(false);
+        _sliderPuzzle.gameObject.SetActive(false);
+        // blinking lights etc etc
+        while (!MinigameStarted) {
+            _emergencyObject.SetActive(false);
+            yield return new WaitForSeconds(0.25f);
+            // todo beeping here
+            _emergencyObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+        }
+        // Start login sequence 
+        _emergencyObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        // Hide blinking lights ui
+        _emergencyObject.SetActive(false);
+        // Complete tasks!!
+        _emergencyGuide.SetActive(true);
+        yield return new WaitForSeconds(3);
+        _emergencyGuide.SetActive(false);
+        
 
-        // Puzzle slider 0
+        // Start puzzles, show Other ui
+        _progressionRectanglesParent.gameObject.SetActive(true);
+        _sliderPuzzle.gameObject.SetActive(true);
+
+
         GenerateNewSliderPuzzle();
         yield return new WaitUntil(() => _stages[_currentStageIndex]);
         _progressionRectangles[_currentStageIndex].enabled = false;
@@ -227,9 +254,35 @@ public class ControlPannel : MonoBehaviour {
         _ButtonPuzzle2.SetActive(true);
         yield return new WaitUntil(() => _stages[_currentStageIndex]);
         _progressionRectangles[_currentStageIndex].enabled = false;
+        _ButtonPuzzle2.SetActive(false);
 
         Debug.Log("YOU DID IT!");
+        _progressionRectanglesParent.gameObject.SetActive(false);
+        _sliderPuzzle.gameObject.SetActive(false);
+
+        // verification complete!
+        _varificationCompleteText.SetActive(true);
+        yield return new WaitForSeconds(3);
+        _varificationCompleteText.SetActive(false);
+
+        // OMG ITS SO LOW WE ARE ALL GOING TO DIE
+        _sedativeLevelParent.SetActive(true); 
+        SequenceComplete = true;
+        StartCoroutine(SedativeProgressDown());
+        while (true) {
+            _sedativeLevelParent.transform.GetChild(0).gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.25f);
+            _sedativeLevelParent.transform.GetChild(0).gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+        }
     }
 
-   
+    private IEnumerator SedativeProgressDown() {
+        var slider = _sedativeLevelParent.GetComponentInChildren<Slider>();
+      
+        while (slider.value >= 0) {
+            slider.value -= 0.0001f;
+            yield return null;
+        }
+    }
 }

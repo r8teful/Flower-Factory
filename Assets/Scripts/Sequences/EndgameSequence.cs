@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndgameSequence : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+public class EndgameSequence : Sequencer {
+    [SerializeField] private Transform _inElevator;
+    protected override IEnumerator Sequence() {
+        Debug.Log("Endgame Start");
+        return base.Sequence();
     }
 }
