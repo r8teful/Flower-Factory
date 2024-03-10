@@ -9,6 +9,7 @@ public class Conveyor : ButtonDevice {
     [SerializeField] private float _spawnDelay;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private List<GameObject> _flowerPrefabs;
+    private AudioSource _loopAudio;
     public bool FlowerSupply { get; set; }
 
     private void Update() {
@@ -27,8 +28,22 @@ public class Conveyor : ButtonDevice {
     }
 
     public override void ButtonClicked() {
+        var a = AudioController.Instance.PlaySound3D("ConveyorStart", transform.position,0.5f);
+        StartCoroutine(WaitForConveyorStartup(a));
+    }
+
+    private IEnumerator WaitForConveyorStartup(AudioSource a) {
+        yield return new WaitForSeconds(3);
         FlowerSupply = true;
         StartCoroutine(SpawnFlowers());
         FlowerSortManager.Instance.GameStarted = true;
+        yield return new WaitUntil(() => !a.isPlaying);
+
+        _loopAudio = AudioController.Instance.PlaySound3D("ConveyorLoop", transform.position, 0.5f,looping:true);
+        _loopAudio.dopplerLevel = 0.5f;
+      // while (FlowerSupply) {
+      //     yield return new WaitUntil(() => _loopAudio.isPlaying);
+      //     _loopAudio.Play();
+      // }
     }
 }

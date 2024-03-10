@@ -14,7 +14,7 @@ public class Elevator : ButtonDevice {
     [SerializeField] private Transform _door2OpenPos;
     private Vector3 _door1ClosedPos;
     private Vector3 _door2ClosedPos;
-
+    private AudioSource _elevatorMovingStart;
     private void Start() {
         _door1ClosedPos = transform.GetChild(0).localPosition;
         _door2ClosedPos = transform.GetChild(1).localPosition;
@@ -36,17 +36,33 @@ public class Elevator : ButtonDevice {
     }
 
     private IEnumerator MoveDoorsToPositions(Vector3 d1, Vector3 d2) {
-        yield return new WaitForSeconds(5);
-        var startTime = Time.time;
+        yield return new WaitForSeconds(2);
+        // Play door move sound
+        AudioController.Instance.PlaySound3D("ElevatorDoorMove",transform.position,0.5f);
         while (_doorsMoving) {
-            _timeMoved = Time.time-startTime;
-            if(_timeMoved>6) _doorsMoving = false;
             transform.GetChild(0).localPosition = Vector3.MoveTowards(transform.GetChild(0).localPosition, d1, 1.5f * Time.deltaTime);
-            transform.GetChild(1).localPosition = Vector3.MoveTowards(transform.GetChild(1).localPosition, d2, 2 * Time.deltaTime);
+            transform.GetChild(1).localPosition = Vector3.MoveTowards(transform.GetChild(1).localPosition, d2, 2f * Time.deltaTime);
+
+            bool door1Reached = Vector3.Distance(transform.GetChild(0).localPosition, d1) < 0.01f;
+            bool door2Reached = Vector3.Distance(transform.GetChild(1).localPosition, d2) < 0.01f;
+            if (door1Reached && door2Reached)
+                _doorsMoving = false;
+            if (door1Reached && door2Reached)
+                _doorsMoving = false;
+
             yield return null;
         }
+        yield return new WaitForSeconds(1.5f);
         // We have closed the doors, packed our bags, are we are ready to head off!
         ElevatorMoving = true;
+        _elevatorMovingStart = AudioController.Instance.PlaySound3D("ElevatorMovingStart", transform.position, 0.5f); 
+        StartCoroutine(WaitForElevatorMove());
+    }
+
+    private IEnumerator WaitForElevatorMove() {
+        yield return new WaitUntil(() => !_elevatorMovingStart.isPlaying);
+        var v = AudioController.Instance.PlaySound3D("ElevatorMoving", transform.position, 0.5f, looping: true);
+        DontDestroyOnLoad(v);
     }
 
     public override void ButtonClicked() {

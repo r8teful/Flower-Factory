@@ -14,9 +14,9 @@ public class GameManager : PersistentSingleton<GameManager> {
 
     public int PlayerProgression { get => _playerProgression; set => _playerProgression = value; }
 
-    private int _playerProgression;
+    [SerializeField] private int _playerProgression;
     private Light[] _lamps;
-    private readonly int[] _cameraPos = { 0, 0, 11, 0};
+    private readonly int[] _cameraPos = { 0, 0, 1, 0};
 
     protected override void Awake() {
         base.Awake();
@@ -39,6 +39,7 @@ public class GameManager : PersistentSingleton<GameManager> {
         if (debugStartFlowerSeq) {
             _flowerSortSequencer.SetActive(true);
         }
+
 #endif
         //OnSceneLoad(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         if (SceneHandler.Instance.IsOverWorld()) {
@@ -66,6 +67,8 @@ public class GameManager : PersistentSingleton<GameManager> {
         if (_playerProgression == 3) {
             // Underground second time
             // todo actiavte other sequence, etc etc.
+
+            GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = false;
             GameObject.Find("ControlRoomSequence").GetComponent<ControlRoomSequence>().enabled = true;
 
         }

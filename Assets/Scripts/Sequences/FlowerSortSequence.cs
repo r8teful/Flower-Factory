@@ -6,8 +6,10 @@ public class FlowerSortSequence : Sequencer {
     [SerializeField] private ConveyorThree _conveyorThree;
     [SerializeField] private Conveyor _conveyorSort;
     [SerializeField] private Elevator _elevator;
+    [SerializeField] private FactoryButton _supplyButton;
     protected override IEnumerator Sequence() {
         // Enter, wait for the lights to be pressed
+        _supplyButton.AllowPress = true;
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         // Go to the machine and press start
         yield return new WaitUntil(() => FlowerSortManager.Instance.GameStarted);

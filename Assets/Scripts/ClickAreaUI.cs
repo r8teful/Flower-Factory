@@ -109,6 +109,7 @@ public void OnPointerMove(PointerEventData eventData) {
                 break;
             case MovementDirection.Forward:
                 if (!CameraMovement.Instance.CanMoveFoward()) return;
+                if (CameraMovement.Instance.LockMovement) return; // Todo should also disable clickarea
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.PointUp;
                 break;
             default:

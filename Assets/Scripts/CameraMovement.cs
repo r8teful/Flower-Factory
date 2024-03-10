@@ -64,8 +64,8 @@ public class CameraMovement : StaticInstance<CameraMovement> {
 
     private void Start() {
         PopulatePlayerPositions();
-        //_currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
-        _currentPos = _positions[_positions.Count-1];
+        _currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
+        //_currentPos = _positions[_positions.Count-7];
         CurrentView = _currentPos.GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }

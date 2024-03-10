@@ -7,7 +7,7 @@ public class UndergroundIntroSequence : Sequencer {
     [SerializeField] private Transform _enterFactory;
     private bool _hasEnteredFactory;
     protected override IEnumerator Sequence() {
-
+        // todo dont allow elevator press but maybe already default false?
         yield return new WaitForSeconds(2);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitUntil(() => _hasEnteredFactory);
