@@ -54,7 +54,7 @@ public class LobbySequence : Sequencer {
     private IEnumerator MoveOverAndWalls() {
         GameObject.Find("Grass").SetActive(false);
         while (true) {
-            _officeWallsAndFloors.transform.position += Vector3.up * Time.deltaTime * _movementSpeed ;
+            _officeWallsAndFloors.transform.position += Vector3.up * Time.deltaTime * 1.5f ;
             yield return null;
         }
     }

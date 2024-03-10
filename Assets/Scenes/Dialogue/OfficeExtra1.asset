@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
-  m_Name: OfficeExtra0
+  m_Name: OfficeExtra1
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - I really shoudn't leave yet,[w:0.5] I should go downstairs and try to fix this
-    mess[w:2]
+  - I should not leave yet[w:1]
+  - I need to find the code for the control room [w:1]

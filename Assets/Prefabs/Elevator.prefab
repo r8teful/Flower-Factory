@@ -297,7 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db88d51c05c291a49ae95b12f0366d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startOpen: 1
   _door1OpenPos: {fileID: 7262557026697173982}
   _door2OpenPos: {fileID: 7262557027739668817}
 --- !u!1 &2758566299888096737
@@ -802,7 +801,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7262557026697173983}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9, y: 3.9031954, z: 4.89}
+  m_LocalPosition: {x: -2.9, y: 3.9031954, z: 5.41}
   m_LocalScale: {x: 1, y: 3.9022748, z: 1.9074476}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -833,7 +832,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7262557027739668818}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9, y: 3.9031954, z: -3.29}
+  m_LocalPosition: {x: -2.9, y: 3.9031954, z: -1.89}
   m_LocalScale: {x: 1, y: 3.9022748, z: 1.9074476}
   m_ConstrainProportionsScale: 0
   m_Children: []

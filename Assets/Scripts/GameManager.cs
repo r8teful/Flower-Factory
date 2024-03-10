@@ -13,7 +13,7 @@ public class GameManager : PersistentSingleton<GameManager> {
     public int[] Code { get { return _code; } private set { _code = value; } }
 
     public int PlayerProgression { get => _playerProgression; set => _playerProgression = value; }
-
+    public AudioSource ElevatorSoundSource { get; set; }
     [SerializeField] private int _playerProgression;
     private Light[] _lamps;
     private readonly int[] _cameraPos = { 0, 0, 1, 0};
@@ -52,6 +52,12 @@ public class GameManager : PersistentSingleton<GameManager> {
     private void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         _playerProgression++;
         Debug.Log(_playerProgression);
+        if (ElevatorSoundSource != null) {
+            // Elevator move sound playing, stop it
+            ElevatorSoundSource.Stop();
+            Destroy(ElevatorSoundSource.gameObject);
+        }
+
         if (_playerProgression == 1) {
             // Underground first time
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = true;

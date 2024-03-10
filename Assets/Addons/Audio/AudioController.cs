@@ -299,9 +299,10 @@ public class AudioController : PersistentSingleton<AudioController> {
         UnMuffleSource(loopSources[loopIndex]);
     }
 
+    // todo add AudioReverbPreset option
     private void ReverbSource(AudioSource source) {
         var reverb = source.gameObject.AddComponent<AudioReverbFilter>();
-        reverb.reverbPreset = AudioReverbPreset.Alley;
+        reverb.reverbPreset = AudioReverbPreset.Hangar;
     }
 
     public void SetLoopTimeNormalized(float normalizedTime, int loopIndex = 0)

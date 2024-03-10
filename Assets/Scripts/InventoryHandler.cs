@@ -7,7 +7,11 @@ public class InventoryHandler : StaticInstance<InventoryHandler> {
     public GameObject HoldingObject {
         get { return _holdingObject; }
         set { _holdingObject = value;
-            if (value == null) CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
+            {
+                CursorManager cursorManager = CursorManager.Instance;
+                if (cursorManager != null)
+                    cursorManager.CurrentCursorType = CursorManager.CursorType.Default;
+            }
         }
     }
     protected override void Awake() {
