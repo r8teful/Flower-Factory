@@ -54,8 +54,8 @@ public class Elevator : ButtonDevice {
             transform.GetChild(0).localPosition = Vector3.MoveTowards(transform.GetChild(0).localPosition, d1, 1.25f * Time.deltaTime);
             transform.GetChild(1).localPosition = Vector3.MoveTowards(transform.GetChild(1).localPosition, d2, 1f * Time.deltaTime);
 
-            bool door1Reached = Vector3.Distance(transform.GetChild(0).localPosition, d1) < 0.01f;
-            bool door2Reached = Vector3.Distance(transform.GetChild(1).localPosition, d2) < 0.01f;
+            bool door1Reached = Vector3.Distance(transform.GetChild(0).localPosition, d1) < 0.2f;
+            bool door2Reached = Vector3.Distance(transform.GetChild(1).localPosition, d2) < 0.2f;
             if (door1Reached && door2Reached)
                 _doorsMoving = false;
             if (door1Reached && door2Reached)

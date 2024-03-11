@@ -35,15 +35,15 @@ public class Conveyor : ButtonDevice {
     }
 
     private IEnumerator WaitForConveyorStartup(AudioSource a) {
+        FlowerSortManager.Instance.GameStarted = true;
         yield return new WaitForSeconds(3);
         FlowerSupply = true;
         StartCoroutine(SpawnFlowers());
-        FlowerSortManager.Instance.GameStarted = true;
         yield return new WaitUntil(() => !a.isPlaying);
 
         _loopAudio = AudioController.Instance.PlaySound3D("ConveyorLoop", transform.position, 0.1f, distortion: new AudioParams.Distortion(false, true),looping:true);
         _loopAudio.dopplerLevel = 0.5f;
-        a.minDistance = 15;
+        _loopAudio.minDistance = 15;
         // while (FlowerSupply) {
         //     yield return new WaitUntil(() => _loopAudio.isPlaying);
         //     _loopAudio.Play();

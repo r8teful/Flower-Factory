@@ -14,7 +14,8 @@ public class CursorManager : StaticInstance<CursorManager>{
         Look,
         FBlue,
         FRed,
-        FYellow
+        FYellow,
+        Key
     }
 
     [SerializeField] private List<Texture2D> cursorTextures;

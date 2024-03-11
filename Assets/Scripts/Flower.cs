@@ -7,14 +7,18 @@ public class Flower : Interactable {
     [SerializeField] public FlowerType type;
     private MeshRenderer[] _meshRenderer;
     public bool IsCrushMode;
+    private bool _isCrushed;
+
     protected override void OnMouseDown() {
         if (IsCrushMode) {
             if (InventoryHandler.Instance.HoldingObject == null) {
+                if (_isCrushed) return;
                 // Turn into powder
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 SetMeshRender(false);
                 FlowerSortManager.Instance.AddPointsCrushed();
                 AudioController.Instance.PlaySound2D("crush", 0.2f);
+                _isCrushed = true;
                 return;
             }
       

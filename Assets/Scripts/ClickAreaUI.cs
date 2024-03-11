@@ -17,23 +17,24 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
         set { _canInteract = value;
         if(_image == null) _image = GetComponent<Image>();
             _image.enabled = value;
+            Debug.Log(gameObject + " is " + value);
         }
     }
 
     private void Awake() {
         _image = GetComponent<Image>();
-        CameraMovement.CurrentCameraPos += OnCameraMoved;
+        CameraMovement.CurrentCameraPeek += OnCameraPeekChanged;
     }
     private void OnDestroy() {
-        CameraMovement.CurrentCameraPos -= OnCameraMoved;
+        CameraMovement.CurrentCameraPeek -= OnCameraPeekChanged;
     }
 
-    private void OnCameraMoved(Transform t) {
+    private void OnCameraPeekChanged(bool b) {
         // We are on a peekpos, and we should enable down image
         if (movementDirection.Equals(MovementDirection.Down)) {
-            CanInteract = t.CompareTag("PeekPos");
+            CanInteract = b;
         } else {
-            CanInteract = !t.CompareTag("PeekPos");
+            CanInteract = !b;
         }
     }
 

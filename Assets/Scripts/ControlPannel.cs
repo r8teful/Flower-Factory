@@ -95,6 +95,12 @@ public class ControlPannel : MonoBehaviour {
 
     private void Start() {
         StartCoroutine(MiniGameSequence());
+        var _loopAudio = AudioController.Instance.PlaySound3D("AmbienceControlroom", transform.position, 0.1f, distortion: new AudioParams.Distortion(false, true), looping: true);
+        _loopAudio.dopplerLevel = 0f;
+        _loopAudio.minDistance = 2;
+        _loopAudio.maxDistance = 5;
+        _loopAudio.spatialBlend = 1;
+
     }
 
     private void GenerateNewSliderPuzzle() {

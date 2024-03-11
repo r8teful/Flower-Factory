@@ -5,16 +5,16 @@ using UnityEngine;
 public class UndergroundIntroSequence : Sequencer {
 
     [SerializeField] private Transform _enterFactory;
+    [SerializeField] private FactoryButton _supplyButton;
     private bool _hasEnteredFactory;
     protected override IEnumerator Sequence() {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(12);
         // That elevator takes forever!
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitUntil(() => _hasEnteredFactory);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[1]);
-
-
         // Done, activate sortSequence
+        _supplyButton.AllowPress = true;
     }
 
 

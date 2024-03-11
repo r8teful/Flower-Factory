@@ -66,8 +66,10 @@ public class GameManager : PersistentSingleton<GameManager> {
         if (_playerProgression == 1) {
             // Underground first time
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = true;
-            AudioController.Instance.SetLoopAndPlay("ambientUnderground");
-            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
+
+            AudioController.Instance.SetLoopAndPlay("ambientUnderground"); 
+            AudioController.Instance.SetLoopVolumeImmediate(0);
+            AudioController.Instance.FadeInLoop(5,0.5f,0);
         }
         if (_playerProgression == 2) {
             // Overground second time bug prone but I dont care
@@ -86,6 +88,9 @@ public class GameManager : PersistentSingleton<GameManager> {
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = false;
             GameObject.Find("ControlRoomSequence").GetComponent<ControlRoomSequence>().enabled = true;
 
+            AudioController.Instance.SetLoopAndPlay("ambientUnderground"); 
+            AudioController.Instance.SetLoopVolumeImmediate(0);
+            AudioController.Instance.FadeInLoop(5, 0.5f, 0);
         }
 
             // Always overworld specific things 
@@ -98,6 +103,10 @@ public class GameManager : PersistentSingleton<GameManager> {
     }
 
     private void AdjustLamps() {
+        RenderSettings.fogDensity = 0.05f;
+        RenderSettings.fogColor = Color.black;
+        RenderSettings.fog = true;
+
         _lamps = FindObjectsOfType<Light>();
         foreach (Light light in _lamps) {
             light.intensity = 0.03f;
@@ -108,10 +117,7 @@ public class GameManager : PersistentSingleton<GameManager> {
                     light.transform.parent.GetComponent<Renderer>().material.SetColor("_Color", new Color(0.55f, 0.5f, 0.43f)); // FFEAC9 is default light, this is darker
                     // I hate color, all I want is 8C806E 
                 }
-            }
-            RenderSettings.fogDensity = 0.05f;
-            RenderSettings.fogColor = Color.black;
-            RenderSettings.fog = true;
+            }    
         }
     }
 

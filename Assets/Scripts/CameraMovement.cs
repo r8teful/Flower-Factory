@@ -19,18 +19,25 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     private Transform _prevPos; 
     private int _viewIndex = 0; 
     private bool _peeking;
-
+    private bool _isRotating; // Need this because we cant just set CurrentView to null like we can on position
     public static event Action<Transform> CurrentCameraPos;
     public static event Action<Transform> CurrentCameraView;
+    public static event Action<bool> CurrentCameraPeek;
     public Transform CurrentView {
         get { return _currentView; }
         set {
             _currentView = value;
-            CurrentCameraView?.Invoke(value);
         }
     }
 
     public bool LockMovement { get; set; }
+    public bool Peeking {
+        get { return _peeking; } 
+        set { 
+            _peeking = value;
+            CurrentCameraPeek?.Invoke(value);
+        }    
+    }
 
     private void OnDrawGizmos() {
         if (positionsInspector != null) {
@@ -81,9 +88,20 @@ public class CameraMovement : StaticInstance<CameraMovement> {
                 _targetPos = null;
             }
         }
-        if (CurrentView != null) {
+        if (CurrentView != null && !_isRotating) {
             var rotation = Quaternion.LookRotation(CurrentView.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,Time.deltaTime *_lookSpeed);
+            if (Quaternion.Angle(transform.rotation, rotation) > 0.01f) {
+                _isRotating = true;
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _lookSpeed);
+        } else if (CurrentView != null && _isRotating) {
+            var rotation = Quaternion.LookRotation(CurrentView.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _lookSpeed);
+            if (Quaternion.Angle(transform.rotation, rotation) < 0.01f) { // This stuff so bugprone idk what to do, guess its good enough?
+                _isRotating = false;
+                CurrentCameraView?.Invoke(CurrentView);
+                Debug.Log("Current view changed");
+            }
         }
     }
 
@@ -126,24 +144,25 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     public void CameraPeek() {
         if (CurrentView == null || _peeking) return;
         if (CurrentView.childCount <= 0) return;
+        if (_targetPos != null) return; // Still moving
         // Save current pos and view so we can go back to it later
+        Peeking = true;
         _prevPos = _currentPos;
         _prevView = CurrentView;
         _targetPos = CurrentView.GetChild(0); // View should always be on second child
         CurrentView = CurrentView.GetChild(1); // View should always be on second child
         // Set position and rotation the one of the peekView
         // Say that we are peeking, only way rotate, or move, is going back
-        _peeking = true;
     }
 
     public void CameraPeekBack() {
         if (!_peeking) return;
         // Go back to prev view and pos
+        Peeking = false;
         _targetPos = _prevPos;
         CurrentView = _prevView;
         _prevPos = null;
         _prevView = null;
-        _peeking = false;
     }
 
     public bool CanMoveFoward() {

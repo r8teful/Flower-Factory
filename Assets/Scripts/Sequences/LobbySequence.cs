@@ -39,15 +39,17 @@ public class LobbySequence : Sequencer {
         Debug.Log("fade out lop");
         AudioController.Instance.FadeOutLoop(3);
         StartCoroutine(MoveOverAndWalls());
-        yield return new WaitForSeconds(10);
+        var time = 20;
+#if UNITY_EDITOR
+        time = 1;
+#endif
+        yield return new WaitForSeconds(time);
+
         //Spook stuff? Sounds, visual things to see that it is moving
 
         //6B7AA0 normal real time shadow light
 
 
-        RenderSettings.fogDensity = 0.05f;
-        RenderSettings.fogColor = Color.black;
-        RenderSettings.fog = true;
 
         SceneHandler.Instance.LoadUnderGround();
     }
