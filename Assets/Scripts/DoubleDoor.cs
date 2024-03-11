@@ -7,8 +7,9 @@ public class DoubleDoor : MonoBehaviour {
     [SerializeField] private Transform _door1OpenPos;
     [SerializeField] private Transform _door2OpenPos;
     [SerializeField] private Transform _toOpenDoor;
-
     [SerializeField] private bool _conditionalOpen;
+    private bool _isOpen;
+
     public bool ConditionalOpen {
         get { return _conditionalOpen; }
         set { _conditionalOpen = value;
@@ -37,11 +38,16 @@ public class DoubleDoor : MonoBehaviour {
     }
 
     public void OpenDoors() {
+        if (_isOpen) return;
+        _isOpen = true;
         _moving = true;
+        AudioController.Instance.PlaySound3D("DoorOpenHeavy", transform.position, 0.4f, distortion: new AudioParams.Distortion(false, true));
         StartCoroutine(MoveDoorsToPositions(_door1OpenPos.localPosition, _door2OpenPos.localPosition));
     }
 
     public void CloseDoors() {
+        if (!_isOpen) return;
+        _isOpen = false;
         _moving = true;
         StartCoroutine(MoveDoorsToPositions(_door1ClosedPos, _door2ClosedPos));
     }

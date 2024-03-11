@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -64,8 +65,8 @@ public class CameraMovement : StaticInstance<CameraMovement> {
 
     private void Start() {
         PopulatePlayerPositions();
-        _currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
-        //_currentPos = _positions[_positions.Count-7];
+        //_currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
+        _currentPos = _positions[_positions.Count-1];
         CurrentView = _currentPos.GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }
@@ -108,7 +109,18 @@ public class CameraMovement : StaticInstance<CameraMovement> {
             _targetPos = lw.CanMoveHere.transform;
             CurrentView = lw.WillLookHere.transform;
             _viewIndex = CurrentView.GetSiblingIndex();
+            PlayStepSound();
         }
+    }
+
+    private void PlayStepSound() {
+        if (SceneHandler.Instance.IsOverWorld()) {
+            var a = AudioController.Instance.PlaySound3D("wood", transform.position, 0.3f, randomization: new AudioParams.Randomization());
+            a.AddComponent<AudioReverbFilter>().reverbPreset = AudioReverbPreset.CarpetedHallway;
+        }  else {
+            AudioController.Instance.PlaySound3D("con", transform.position, 0.3f, distortion: new AudioParams.Distortion(false, true), randomization: new AudioParams.Randomization());
+        }
+      
     }
 
     public void CameraPeek() {

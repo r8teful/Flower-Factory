@@ -31,7 +31,6 @@ public class ControlRoomSequence : Sequencer {
 
     }
 
-
     private void Awake() => CameraMovement.CurrentCameraPos += CameraPosChanged;
     private void OnDestroy() => CameraMovement.CurrentCameraPos -= CameraPosChanged;
     private void CameraPosChanged(Transform t) {

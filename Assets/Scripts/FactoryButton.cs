@@ -16,6 +16,12 @@ public class FactoryButton : Interactable {
     protected override void OnMouseDown() {
         if (_hasPressed || !AllowPress) return;
         if (_connectedDevice == null) return;
+        if(_connectedDevice.gameObject.GetComponent<Conveyor>() != null) {
+            // Elevator button
+            AudioController.Instance.PlaySound3D("buttonPushHeavy", transform.position, 0.6f, distortion: new AudioParams.Distortion(false, true));
+        } else {
+            AudioController.Instance.PlaySound3D("buttonPush", transform.position, 0.6f);
+        }
         mButton.ActivateButton();
         _connectedDevice.ButtonClicked();
         _hasPressed = true;
@@ -23,5 +29,6 @@ public class FactoryButton : Interactable {
 
     private void Start() {
         mButton = GetComponentInChildren<MovingButton>();
+        mButton.MoveDistance = 0.2f;
     }
 }

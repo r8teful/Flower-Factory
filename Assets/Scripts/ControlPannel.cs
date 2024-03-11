@@ -121,8 +121,13 @@ public class ControlPannel : MonoBehaviour {
         if(_currentStageIndex < 2) {
             if(buttonIndex == _buttonPuzzleIndex) {
                 // Check if all the sliders are good
-                for (int i = 0; i < 3; i++) if (_sliderProgress[i].enabled) return;
+                for (int i = 0; i < 3; i++) if (_sliderProgress[i].enabled) {
+                    AudioController.Instance.PlaySound2D("bad", 0.5f);
+                    return;
+                } 
                 _stages[_currentStageIndex] = true;
+            } else {
+                AudioController.Instance.PlaySound2D("bad", 0.5f);
             }
         }
 
@@ -142,6 +147,8 @@ public class ControlPannel : MonoBehaviour {
                 // next stage
                 _stages[_currentStageIndex] = true;
                 _buttonsClicked = 0;
+
+                AudioController.Instance.PlaySound2D("good", 0.5f);
             }
         }
         if(_currentStageIndex==3) {
@@ -155,6 +162,7 @@ public class ControlPannel : MonoBehaviour {
             }
             if ((_buttonsClicked == _progressionSquare1.Length) && (_passed == true)) {
                 // next stage
+                AudioController.Instance.PlaySound2D("good", 0.5f);
                 _stages[_currentStageIndex] = true;
                 _buttonsClicked = 0;
             }
@@ -170,6 +178,7 @@ public class ControlPannel : MonoBehaviour {
             }
             if ((_buttonsClicked == _progressionSquare2.Length) && (_passed == true)) {
                 // next stage
+                AudioController.Instance.PlaySound2D("good", 0.5f);
                 _stages[_currentStageIndex] = true;
                 _buttonsClicked = 0;
             }
@@ -177,6 +186,7 @@ public class ControlPannel : MonoBehaviour {
     }
 
     private void ResetProgress() {
+        AudioController.Instance.PlaySound2D("bad", 0.5f);
         _buttonsClicked = 0;
         if (_currentStageIndex == 2) {
             for (int i = 0; i < _progressionSquare0.Length; i++) {
@@ -206,6 +216,10 @@ public class ControlPannel : MonoBehaviour {
             yield return new WaitForSeconds(0.25f);
             // todo beeping here
             _emergencyObject.SetActive(true);
+            var a = AudioController.Instance.PlaySound3D("warning", transform.position, 0.6f);
+            a.dopplerLevel = 0;
+            a.maxDistance = 5;
+            a.spatialBlend = 1;
             yield return new WaitForSeconds(1f);
         }
         // Start login sequence 
@@ -214,6 +228,7 @@ public class ControlPannel : MonoBehaviour {
         // Hide blinking lights ui
         _emergencyObject.SetActive(false);
         // Complete tasks!!
+        AudioController.Instance.PlaySound2D("neutral", 0.5f);
         _emergencyGuide.SetActive(true);
         yield return new WaitForSeconds(3);
         _emergencyGuide.SetActive(false);
@@ -261,6 +276,8 @@ public class ControlPannel : MonoBehaviour {
         _sliderPuzzle.gameObject.SetActive(false);
 
         // verification complete!
+
+        AudioController.Instance.PlaySound2D("neutral", 0.5f);
         _varificationCompleteText.SetActive(true);
         yield return new WaitForSeconds(3);
         _varificationCompleteText.SetActive(false);
@@ -273,6 +290,10 @@ public class ControlPannel : MonoBehaviour {
             _sedativeLevelParent.transform.GetChild(0).gameObject.SetActive(false);
             yield return new WaitForSeconds(0.25f);
             _sedativeLevelParent.transform.GetChild(0).gameObject.SetActive(true);
+            var a = AudioController.Instance.PlaySound3D("warning", transform.position, 0.6f);
+            a.dopplerLevel = 0;
+            a.maxDistance = 5;
+            a.spatialBlend = 1;
             yield return new WaitForSeconds(1f);
         }
     }

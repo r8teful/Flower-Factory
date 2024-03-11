@@ -17,6 +17,9 @@ public class SceneHandler : PersistentSingleton<SceneHandler> {
     public bool IsOverWorld() {
         return SceneManager.GetActiveScene().buildIndex == 0;
     }
+    public bool IsUnderGround() {
+        return SceneManager.GetActiveScene().buildIndex == 1;
+    }
 
     IEnumerator LoadYourAsyncScene(int buildIndex) {
        

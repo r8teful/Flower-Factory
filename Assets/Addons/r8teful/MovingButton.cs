@@ -7,6 +7,9 @@ public class MovingButton : MonoBehaviour {
     private bool isMoving = false;
     private Vector3 originalPosition;
     [SerializeField] private bool _isRight;
+
+    public float MoveDistance { get => moveDistance; set => moveDistance = value; }
+
     private void Start() {
         originalPosition = transform.position;
     }

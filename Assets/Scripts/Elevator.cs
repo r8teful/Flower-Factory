@@ -67,6 +67,9 @@ public class Elevator : ButtonDevice {
             yield return new WaitForSeconds(1.5f);
             // We have closed the doors, packed our bags, are we are ready to head off!
             ElevatorMoving = true;
+            if(SceneHandler.Instance.IsUnderGround()) {
+                FindObjectOfType<ElevatorMoveObject>().MoveElevatorUp();
+            }
             _elevatorMovingStart = AudioController.Instance.PlaySound3D("ElevatorMovingStart", transform.position, 0.5f); 
             StartCoroutine(WaitForElevatorMove());
         }

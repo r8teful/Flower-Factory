@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OfficeDoor : Interactable {
@@ -32,6 +33,9 @@ public class OfficeDoor : Interactable {
     protected override void OnMouseDown() {
         if (InventoryHandler.Instance.HoldingObject == null || !_canOpen) return;
         // Can move forward now
+        var a = AudioController.Instance.PlaySound3D("DoorOpenOffice", transform.position, 0.4f);
+        a.AddComponent<AudioReverbFilter>().reverbPreset = AudioReverbPreset.Hallway;
+        
         InventoryHandler.Instance.HoldingObject = null;
         _door.localRotation = Quaternion.Euler(0, -70,0);
         _conditionCanMove.ConditionalMove = false;
