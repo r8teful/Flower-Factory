@@ -9,7 +9,7 @@ public class FlowerBox : Interactable {
         var inventoryItem = InventoryHandler.Instance.HoldingObject;
         if (inventoryItem == null) return;
         var f = inventoryItem.GetComponent<Flower>();
-        if (f == null) return; // Not holding flower
+        if (f == null) return; // Not holding a flower
         if(f.type.Equals(_flowerBoxType)) {
             // Holding flower we want, place it down now
             f.gameObject.transform.position = _placePosition.position;

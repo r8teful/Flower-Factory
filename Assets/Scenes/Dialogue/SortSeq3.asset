@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - Lets sheck with boss [w:2]
+  - '[t:10]That did not sound good[w:2]'

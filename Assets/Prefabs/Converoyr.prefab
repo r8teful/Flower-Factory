@@ -529,7 +529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4086408033712126460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.33, y: 1.773, z: 5.083}
+  m_LocalPosition: {x: -7.3, y: 1.773, z: 5.083}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -589,12 +589,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 3978730890014495787}
   _parentMovement: {fileID: 1926199322608071204}
-  _spawnDelay: 1
-  _movementSpeed: 2
+  _spawnDelay: 0.3
+  _movementSpeed: 3.5
   _flowerPrefabs:
   - {fileID: 6474079065818250666, guid: d06942a11dbfd044bb954e257d6c542e, type: 3}
   - {fileID: 6474079065818250666, guid: cdadeded1b75d744eafdf3e88e47911c, type: 3}
   - {fileID: 6474079065818250666, guid: 3a3ff203a929cbf4b8507107c549a62b, type: 3}
+  _handPrefab: {fileID: 3456455082937163061, guid: de40f4e0bffeaa442a68f4fda6c382fe, type: 3}
 --- !u!1 &7439433302879218645
 GameObject:
   m_ObjectHideFlags: 0

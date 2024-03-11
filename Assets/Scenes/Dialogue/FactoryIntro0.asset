@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - That elevator is always so,[w:0.1][t:15] slow[w:1]
+  - That elevator is always so[w:0.1][t:15] slow[w:1]

@@ -24,6 +24,7 @@ public class Flower : Interactable {
       
         } else {
             if (InventoryHandler.Instance.HoldingObject != null) return; // Inventory full
+            if (gameObject.GetComponent<Rigidbody>() != null) return; // Already picked up, dont bother
             switch (type) {
             case FlowerType.Yellow:
                 CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.FYellow;

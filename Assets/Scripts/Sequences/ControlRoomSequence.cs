@@ -5,14 +5,16 @@ public class ControlRoomSequence : Sequencer {
 
     [SerializeField] private Transform _enterControlPannel;
     [SerializeField] private Transform _onStairs;
+    [SerializeField] private Transform _enterControlPannelDoor;
     [SerializeField] private ClickAreaUI _back;
     [SerializeField] private ControlPannel _controlPannel;
     private bool _hasEnteredControlPannel;
     private bool _hasBeenOnStairs;
-
+    private bool _hasEnteredControlPannelDoor;
 
     protected override IEnumerator Sequence() {
-
+        yield return new WaitUntil(() => _hasEnteredControlPannelDoor);
+        AudioController.Instance.PlaySound2D("controlRoom", 0.5f);
         yield return new WaitUntil(() => _hasEnteredControlPannel);
         yield return new WaitForEndOfFrame();
         // Lock movement going back until we have finished minigame
@@ -37,6 +39,9 @@ public class ControlRoomSequence : Sequencer {
     private void CameraPosChanged(Transform t) {
         if (t == _enterControlPannel) {
             _hasEnteredControlPannel = true;
+        }
+        if (t == _enterControlPannelDoor) {
+            _hasEnteredControlPannelDoor = true;
         }
         if (t == _onStairs) {
             _hasBeenOnStairs = true;  

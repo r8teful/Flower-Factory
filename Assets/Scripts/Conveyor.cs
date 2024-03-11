@@ -1,3 +1,4 @@
+using Pixelplacement.TweenSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,12 @@ using UnityEngine;
 public class Conveyor : ButtonDevice {
 
     [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Transform _spawnPointHand;
     [SerializeField] private Transform _parentMovement;
     [SerializeField] private float _spawnDelay;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private List<GameObject> _flowerPrefabs;
+    [SerializeField] private GameObject _handPrefab;
     private AudioSource _loopAudio;
     public bool FlowerSupply { get; set; }
 
@@ -23,8 +26,13 @@ public class Conveyor : ButtonDevice {
             var rotation = Quaternion.Euler(90, -180, Random.Range(-20, 20));
             var i = Instantiate(_flowerPrefabs[r], _spawnPoint.position, rotation, _parentMovement);
             Destroy(i, 20f);
-            yield return new WaitForSeconds(_spawnDelay+ Random.Range(0,2));
+            yield return new WaitForSeconds(_spawnDelay+ Random.value);
         }
+    }
+
+    public void SpawnHand() {
+        var i = Instantiate(_handPrefab, _spawnPointHand.position, _handPrefab.transform.rotation, _parentMovement);
+        Destroy(i, 20f);
     }
 
     public override void ButtonClicked() {
