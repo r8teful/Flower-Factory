@@ -44,6 +44,8 @@ public class GameManager : PersistentSingleton<GameManager> {
         //OnSceneLoad(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         if (SceneHandler.Instance.IsOverWorld()) {
             GameObject.Find("LobbySequence").GetComponent<LobbySequence>().enabled = true;
+            AudioController.Instance.SetLoopAndPlay("ambientOverworldHappy");
+            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
         }
 
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -52,6 +54,9 @@ public class GameManager : PersistentSingleton<GameManager> {
     private void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         _playerProgression++;
         Debug.Log(_playerProgression);
+#if UNITY_EDITOR
+        AudioController.Instance.StopAllLoops();
+#endif
         if (ElevatorSoundSource != null) {
             // Elevator move sound playing, stop it
             ElevatorSoundSource.Stop();
@@ -61,6 +66,8 @@ public class GameManager : PersistentSingleton<GameManager> {
         if (_playerProgression == 1) {
             // Underground first time
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = true;
+            AudioController.Instance.SetLoopAndPlay("ambientUnderground");
+            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
         }
         if (_playerProgression == 2) {
             // Overground second time bug prone but I dont care
@@ -69,6 +76,8 @@ public class GameManager : PersistentSingleton<GameManager> {
             GameObject.Find("Hallway1").transform.GetChild(3).GetComponent<LookView>().ConditionalMove = false;
             AdjustLamps();
             OpenOffice();
+            AudioController.Instance.SetLoopAndPlay("ambientOverground"); // Bit more creepy now!
+            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
         }
         if (_playerProgression == 3) {
             // Underground second time
@@ -91,7 +100,18 @@ public class GameManager : PersistentSingleton<GameManager> {
     private void AdjustLamps() {
         _lamps = FindObjectsOfType<Light>();
         foreach (Light light in _lamps) {
-            light.intensity = 0.1f;
+            light.intensity = 0.03f;
+            var p = light.transform.parent;
+            if (p != null) {
+                var r = p.GetComponent<Renderer>();
+                if (r != null && r.material != null) {
+                    light.transform.parent.GetComponent<Renderer>().material.SetColor("_Color", new Color(0.55f, 0.5f, 0.43f)); // FFEAC9 is default light, this is darker
+                    // I hate color, all I want is 8C806E 
+                }
+            }
+            RenderSettings.fogDensity = 0.05f;
+            RenderSettings.fogColor = Color.black;
+            RenderSettings.fog = true;
         }
     }
 

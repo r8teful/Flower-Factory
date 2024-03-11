@@ -24,6 +24,7 @@ public class ControlRoomSequence : Sequencer {
         yield return new WaitUntil(() => _controlPannel.SequenceComplete);
         _back.CanInteract = true;
         // I should get out of here
+        yield return new WaitForSeconds(2);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         _hasBeenOnStairs = false;
         yield return new WaitUntil(() => _hasBeenOnStairs);

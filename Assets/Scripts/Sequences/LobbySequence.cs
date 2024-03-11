@@ -36,7 +36,8 @@ public class LobbySequence : Sequencer {
         // End of lobby, load underground
         _elevatorLook.gameObject.SetActive(true);
         //_elevatorLook.GetComponent<PeekCollider>().enabled = true;
-
+        Debug.Log("fade out lop");
+        AudioController.Instance.FadeOutLoop(3);
         StartCoroutine(MoveOverAndWalls());
         yield return new WaitForSeconds(10);
         //Spook stuff? Sounds, visual things to see that it is moving

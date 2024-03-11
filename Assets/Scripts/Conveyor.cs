@@ -28,7 +28,7 @@ public class Conveyor : ButtonDevice {
     }
 
     public override void ButtonClicked() {
-        var a = AudioController.Instance.PlaySound3D("ConveyorStart", transform.position, 0.05f, distortion: new AudioParams.Distortion(false, true));
+        var a = AudioController.Instance.PlaySound3D("ConveyorStart", transform.position, 0.1f, distortion: new AudioParams.Distortion(false, true));
         a.dopplerLevel = 0.5f;
         a.minDistance = 15;
         StartCoroutine(WaitForConveyorStartup(a));
@@ -41,7 +41,7 @@ public class Conveyor : ButtonDevice {
         FlowerSortManager.Instance.GameStarted = true;
         yield return new WaitUntil(() => !a.isPlaying);
 
-        _loopAudio = AudioController.Instance.PlaySound3D("ConveyorLoop", transform.position, 0.05f, distortion: new AudioParams.Distortion(false, true),looping:true);
+        _loopAudio = AudioController.Instance.PlaySound3D("ConveyorLoop", transform.position, 0.1f, distortion: new AudioParams.Distortion(false, true),looping:true);
         _loopAudio.dopplerLevel = 0.5f;
         a.minDistance = 15;
         // while (FlowerSupply) {

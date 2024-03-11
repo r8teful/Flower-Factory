@@ -14,6 +14,7 @@ public class Flower : Interactable {
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 SetMeshRender(false);
                 FlowerSortManager.Instance.AddPointsCrushed();
+                AudioController.Instance.PlaySound2D("crush", 0.2f);
                 return;
             }
       
@@ -33,6 +34,7 @@ public class Flower : Interactable {
                 break;
             }
             SetMeshRender(false);
+            AudioController.Instance.PlaySound2D("pickup",0.3f);
             InventoryHandler.Instance.HoldingObject = gameObject;
         }
     }

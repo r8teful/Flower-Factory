@@ -125,7 +125,9 @@ public class ControlPannel : MonoBehaviour {
                     AudioController.Instance.PlaySound2D("bad", 0.5f);
                     return;
                 } 
+                // Next stage
                 _stages[_currentStageIndex] = true;
+                AudioController.Instance.PlaySound2D("good", 0.5f);
             } else {
                 AudioController.Instance.PlaySound2D("bad", 0.5f);
             }

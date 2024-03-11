@@ -15,7 +15,7 @@ public class OfficeSequence : Sequencer {
     private bool _codeDialoguePlayed;
 
     protected override IEnumerator Sequence() {
-       
+        AudioController.Instance.PlaySound2D("theOffice", 0.5f);
         _elevatorLook.gameObject.SetActive(false);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
