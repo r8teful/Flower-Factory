@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PeekCollider : Interactable {
     protected override void OnMouseDown() {
         CameraMovement.Instance.CameraPeek();

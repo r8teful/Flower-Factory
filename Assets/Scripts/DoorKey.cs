@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorKey : Interactable {
+    private bool _pickedUp;
     protected override void OnMouseDown() {
+        if (_pickedUp) return;
+        _pickedUp = true;
         CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Key; // Placeholder
         InventoryHandler.Instance.HoldingObject = gameObject;
         gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;

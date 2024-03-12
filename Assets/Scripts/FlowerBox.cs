@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlowerBox : Interactable {
     [SerializeField] private Flower.FlowerType _flowerBoxType;

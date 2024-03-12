@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public class ClickArea : Interactable {
+﻿public class ClickArea : Interactable {
     protected override void OnMouseDown() {
         throw new System.NotImplementedException();
     }

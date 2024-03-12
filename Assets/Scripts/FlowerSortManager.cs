@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-
-public class FlowerSortManager : StaticInstance<FlowerSortManager> {
+﻿public class FlowerSortManager : StaticInstance<FlowerSortManager> {
     private bool _gameStarted;
 
     private int _amountSorted;

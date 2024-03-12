@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Elevator : ButtonDevice {
@@ -19,10 +18,10 @@ public class Elevator : ButtonDevice {
         _door2ClosedPos = transform.GetChild(1).localPosition;
         _fb = GetComponentInChildren<FactoryButton>();
         // Start open only first scene
-        if (GameManager.Instance.PlayerProgression == 0) {
+        if (GameManager.Instance.PlayerProgression == 1) {
             transform.GetChild(0).localPosition = _door1OpenPos.localPosition;
             transform.GetChild(1).localPosition = _door2OpenPos.localPosition;
-        } else if (GameManager.Instance.PlayerProgression == 2) {
+        } else if (GameManager.Instance.PlayerProgression ==3) {
             AllowButtonClick(false); // Don't allow to move up again before some other sequence script says we can
             AudioController.Instance.PlaySound3D("ElevatorMovingStop", transform.position, 0.5f);
             OpenDoors(1);

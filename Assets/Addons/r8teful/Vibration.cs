@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Vibration : MonoBehaviour {
     private float vibrationIntensity = 0.05f; // Adjust the intensity of the vibration

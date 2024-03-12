@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LobbySequence : Sequencer {
@@ -15,6 +13,8 @@ public class LobbySequence : Sequencer {
     private bool _lookedAtOfficeDialoguePlayed;
     private bool _doorUnlock;
     protected override IEnumerator Sequence() {
+        Debug.Log("Lobby sequence start");
+        if (GameManager.Instance.PlayerProgression >= 2) yield break;
         _elevatorLook.gameObject.SetActive(false);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);

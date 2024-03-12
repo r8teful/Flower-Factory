@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : PersistentSingleton<GameManager> {
@@ -15,9 +14,9 @@ public class GameManager : PersistentSingleton<GameManager> {
 
     public int PlayerProgression { get => _playerProgression; set => _playerProgression = value; }
     public AudioSource ElevatorSoundSource { get; set; }
-    [SerializeField] private int _playerProgression;
+    [SerializeField] private int _playerProgression; // 0 is main menu, 1 is first scene, 2 is second, 3 is first 2nd time, 4 is 2nd 2nd time
     private Light[] _lamps;
-    private readonly int[] _cameraPos = { 0, 0, 1, 0};
+    private readonly int[] _cameraPos = { 0, 0, 0, 1, 0};
 
     protected override void Awake() {
         base.Awake();
@@ -33,46 +32,54 @@ public class GameManager : PersistentSingleton<GameManager> {
     }
 
     private void OnDestroy() {
+        Debug.Log("OnDestroy");
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
     private void Start() {
-#if UNITY_EDITOR
-        if (debugStartFlowerSeq) {
-            _flowerSortSequencer.SetActive(true);
-        }
 
-#endif
-        //OnSceneLoad(SceneManager.GetActiveScene(),LoadSceneMode.Single);
-        if (SceneHandler.Instance.IsOverWorld()) {
-            GameObject.Find("LobbySequence").GetComponent<LobbySequence>().enabled = true;
-            AudioController.Instance.SetLoopAndPlay("ambientOverworldHappy");
-            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
-        }
-        ChangeSceneLook(_playerProgression);
         SceneManager.sceneLoaded += OnSceneLoad;
+        ChangeSceneLook(_playerProgression);
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode) {
-        _playerProgression++;
-        Debug.Log(_playerProgression);
-#if UNITY_EDITOR
-        AudioController.Instance.StopAllLoops();
-#endif
+        var i = scene.buildIndex;
+        if (i == 0) {
+            // Main menu, reset player progression
+            _playerProgression = 0;
+        } 
+        if (i == 1) {
+            if(_playerProgression < 2) {
+            // first time loading overworld
+            _playerProgression = 1;
+            } else {
+                // second time
+                _playerProgression = 3;
+            }
+        }
+        if (i == 2) {
+            if(_playerProgression < 2) {
+                // first time loading underworld
+                _playerProgression = 2;
+            } else {
+                _playerProgression = 4;
+            }
+        } 
         if (ElevatorSoundSource != null) {
             // Elevator move sound playing, stop it
             ElevatorSoundSource.Stop();
             Destroy(ElevatorSoundSource.gameObject);
         }
-
+        Debug.Log(_playerProgression);
         ChangeSceneLook(_playerProgression);
-            // Always overworld specific things 
-        if (SceneHandler.Instance.IsOverWorld()) {
-        }
     }
 
     private void ChangeSceneLook(int progress) {
-
         if (progress == 1) {
+            GameObject.Find("LobbySequence").GetComponent<LobbySequence>().enabled = true;
+            AudioController.Instance.SetLoopAndPlay("ambientOverworldHappy");
+            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
+        }
+        if (progress == 2) {
             // Underground first time
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = true;
 
@@ -80,17 +87,16 @@ public class GameManager : PersistentSingleton<GameManager> {
             AudioController.Instance.SetLoopVolumeImmediate(0);
             AudioController.Instance.FadeInLoop(5, 0.5f, 0);
         }
-        if (progress == 2) {
+        if (progress == 3) {
             // Overground second time bug prone but I dont care
             GameObject.Find("OfficeSequence").GetComponent<OfficeSequence>().enabled = true;
             GameObject.Find("MiddleRoom").transform.GetChild(0).GetComponent<LookView>().ConditionalMove = false;
             GameObject.Find("Hallway1").transform.GetChild(3).GetComponent<LookView>().ConditionalMove = false;
             AdjustLamps();
             OpenOffice();
-            AudioController.Instance.SetLoopAndPlay("ambientOverground"); // Bit more creepy now!
-            AudioController.Instance.SetLoopVolumeImmediate(0.5f);
+            //AudioController.Instance.StopLoop(0);
         }
-        if (progress == 3) {
+        if (progress == 4) {
             // Underground second time
             // todo actiavte other sequence, etc etc.
 
@@ -108,6 +114,11 @@ public class GameManager : PersistentSingleton<GameManager> {
         RenderSettings.fogDensity = 0.025f;
         RenderSettings.fogColor = Color.black;
         RenderSettings.fog = true;
+        _lamps = FindObjectsOfType<Light>();
+        foreach (Light light in _lamps) {
+            if(!light.CompareTag("Findable"))
+                light.intensity = 0.03f;
+        }
     }
 
     private void OpenOffice() {

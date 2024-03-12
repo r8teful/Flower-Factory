@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,13 +17,6 @@ public class SceneHandler : PersistentSingleton<SceneHandler> {
     }
 
     public void StartGame() {
-        var o = GameObject.Find("LOADING");
-        if (o != null) {
-            var r = o.GetComponent<RawImage>();
-            if (r !=null) r.enabled = true;
-            var c = r.transform.GetChild(0);
-            if (c!=null) c.gameObject.SetActive(true);
-        }
         StartCoroutine(LoadYourAsyncScene(1));
     }
 
@@ -56,6 +47,16 @@ public class SceneHandler : PersistentSingleton<SceneHandler> {
         }
 # endif
     }
+    public void PlayMainMenuLoop() {
+        if (!AudioController.Instance.IsLoopPlaying("mainMenu")) {
+            Debug.Log("PlayingLoop");
+            AudioController.Instance.SetLoopAndPlay("mainMenu", 0);
+        } else {
+            Debug.Log("Loop already playing!");
+            // Assume we already started the loop, so just resume
+            AudioController.Instance.FadeInLoop(4, 1);
+        }
+    }
 
     internal void LoadEndMenu() {
         StartCoroutine(LoadYourAsyncScene(3));
@@ -65,11 +66,5 @@ public class SceneHandler : PersistentSingleton<SceneHandler> {
     }
     public void ApplicationQuit() {
         Application.Quit();
-    }
-    public void onOneSocketClicked() {
-        Application.OpenURL("https://forms.gle/uv7yddLeVHcU8BLM7"); // todo
-    }
-    public void onRateClicked() {
-        Application.OpenURL("https://forms.gle/uv7yddLeVHcU8BLM7"); // todo
     }
 }

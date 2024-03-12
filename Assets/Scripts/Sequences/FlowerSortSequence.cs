@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlowerSortSequence : Sequencer {
@@ -40,8 +38,14 @@ public class FlowerSortSequence : Sequencer {
         AudioController.Instance.PlaySound3D("explosionDistantBetter",new Vector3(
             _conveyorSort.transform.position.x, _conveyorSort.transform.position.y + 2, _conveyorSort.transform.position.z), 1f);
 
+        var s = FindObjectOfType<CameraShake>();
+        StartCoroutine(s.Shake(1.4f, 0.2f));
+        yield return new WaitForSeconds(1.4f);
+        StartCoroutine(s.Shake(1f, 0.1f));
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(s.Shake(0.5f, 0.04f));
         // wait before we say anything
-        yield return new WaitForSeconds(3.24f);
+        yield return new WaitForSeconds(2.42f);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[3]); // That did not sound good
         yield return new WaitForSeconds(15f); // Play for another little bit
         _conveyorSort.FlowerSupply = false;
