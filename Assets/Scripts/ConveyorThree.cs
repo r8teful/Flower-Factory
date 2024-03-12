@@ -24,7 +24,7 @@ public class ConveyorThree : ButtonDevice {
                 var p = Instantiate(_flowerPrefabs[i], _spawnPoints[i].position, rotation, _parentMovement);
                 p.GetComponent<Flower>().IsCrushMode = true;
                 Destroy(p,7f);
-                yield return new WaitForSeconds(_spawnDelay + Random.Range(0, 2));
+                yield return new WaitForSeconds(_spawnDelay + Random.value);
             }
         }
     }

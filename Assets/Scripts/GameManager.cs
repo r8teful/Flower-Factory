@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : PersistentSingleton<GameManager> {
@@ -22,9 +23,9 @@ public class GameManager : PersistentSingleton<GameManager> {
         base.Awake();
         if (_code == null || _code.Length != 3) {
             _code = new int[3];
-            _code[0] = 0;
-            _code[1] = 0;
-            _code[2] = 0;
+            _code[0] = 6;
+            _code[1] = 4;
+            _code[2] = 9;
        //     _code[0] = Random.Range(0, 10);
        //     _code[1] = Random.Range(0, 10);
        //     _code[2] = Random.Range(0, 10);
@@ -47,7 +48,7 @@ public class GameManager : PersistentSingleton<GameManager> {
             AudioController.Instance.SetLoopAndPlay("ambientOverworldHappy");
             AudioController.Instance.SetLoopVolumeImmediate(0.5f);
         }
-
+        ChangeSceneLook(_playerProgression);
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
@@ -63,15 +64,23 @@ public class GameManager : PersistentSingleton<GameManager> {
             Destroy(ElevatorSoundSource.gameObject);
         }
 
-        if (_playerProgression == 1) {
+        ChangeSceneLook(_playerProgression);
+            // Always overworld specific things 
+        if (SceneHandler.Instance.IsOverWorld()) {
+        }
+    }
+
+    private void ChangeSceneLook(int progress) {
+
+        if (progress == 1) {
             // Underground first time
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = true;
 
-            AudioController.Instance.SetLoopAndPlay("ambientUnderground"); 
+            AudioController.Instance.SetLoopAndPlay("ambientUnderground");
             AudioController.Instance.SetLoopVolumeImmediate(0);
-            AudioController.Instance.FadeInLoop(5,0.5f,0);
+            AudioController.Instance.FadeInLoop(5, 0.5f, 0);
         }
-        if (_playerProgression == 2) {
+        if (progress == 2) {
             // Overground second time bug prone but I dont care
             GameObject.Find("OfficeSequence").GetComponent<OfficeSequence>().enabled = true;
             GameObject.Find("MiddleRoom").transform.GetChild(0).GetComponent<LookView>().ConditionalMove = false;
@@ -81,21 +90,24 @@ public class GameManager : PersistentSingleton<GameManager> {
             AudioController.Instance.SetLoopAndPlay("ambientOverground"); // Bit more creepy now!
             AudioController.Instance.SetLoopVolumeImmediate(0.5f);
         }
-        if (_playerProgression == 3) {
+        if (progress == 3) {
             // Underground second time
             // todo actiavte other sequence, etc etc.
 
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = false;
             GameObject.Find("ControlRoomSequence").GetComponent<ControlRoomSequence>().enabled = true;
-
-            AudioController.Instance.SetLoopAndPlay("ambientUnderground"); 
+            AdjustUndergroundAmbience();
+            AudioController.Instance.SetLoopAndPlay("ambientUnderground");
             AudioController.Instance.SetLoopVolumeImmediate(0);
             AudioController.Instance.FadeInLoop(5, 0.5f, 0);
         }
+    }
 
-            // Always overworld specific things 
-        if (SceneHandler.Instance.IsOverWorld()) {
-        }
+    private void AdjustUndergroundAmbience() {
+        // Just add some fog, possibly also make it slighty darker
+        RenderSettings.fogDensity = 0.025f;
+        RenderSettings.fogColor = Color.black;
+        RenderSettings.fog = true;
     }
 
     private void OpenOffice() {

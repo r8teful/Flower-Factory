@@ -93,7 +93,7 @@ public class ControlPannel : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    public void StartPannel() {
         StartCoroutine(MiniGameSequence());
         var _loopAudio = AudioController.Instance.PlaySound3D("AmbienceControlroom", transform.position, 0.1f, distortion: new AudioParams.Distortion(false, true), looping: true);
         _loopAudio.dopplerLevel = 0f;

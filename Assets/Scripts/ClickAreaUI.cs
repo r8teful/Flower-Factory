@@ -17,7 +17,6 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
         set { _canInteract = value;
         if(_image == null) _image = GetComponent<Image>();
             _image.enabled = value;
-            Debug.Log(gameObject + " is " + value);
         }
     }
 

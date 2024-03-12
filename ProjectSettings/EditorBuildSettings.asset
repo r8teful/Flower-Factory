@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: c55c963b79c412a46a353d45792c40d5
+  - enabled: 1
     path: Assets/Scenes/OverGrounds.unity
     guid: f0a41f1403ec462478003601879fb052
   - enabled: 1
     path: Assets/Scenes/Undergrounds.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/EndMenu.unity
+    guid: 4c490c2a8a1053f45a841a9bfebdde7c
   m_configObjects: {}

@@ -81,7 +81,7 @@ public class FlowerSortSequence : Sequencer {
         _elevator.AllowButtonClick(true);
         yield return new WaitUntil(() => _elevator.ElevatorMoving);
         yield return new WaitForSeconds(10);
-        SceneHandler.Instance.LoadOverGround();
+        SceneHandler.Instance.LoadOverGroundAsync();
     }
 
 

@@ -38,6 +38,9 @@ public class CameraMovement : StaticInstance<CameraMovement> {
             CurrentCameraPeek?.Invoke(value);
         }    
     }
+    public void SetMoveSpeed(float value) {
+        _moveSpeed = value;
+    }
 
     private void OnDrawGizmos() {
         if (positionsInspector != null) {
@@ -100,7 +103,6 @@ public class CameraMovement : StaticInstance<CameraMovement> {
             if (Quaternion.Angle(transform.rotation, rotation) < 0.01f) { // This stuff so bugprone idk what to do, guess its good enough?
                 _isRotating = false;
                 CurrentCameraView?.Invoke(CurrentView);
-                Debug.Log("Current view changed");
             }
         }
     }
