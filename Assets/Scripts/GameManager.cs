@@ -63,7 +63,12 @@ public class GameManager : PersistentSingleton<GameManager> {
             } else {
                 _playerProgression = 4;
             }
-        } 
+        }
+        if (i == 3) {
+            // End menu, reset player progression
+            _playerProgression = 0;
+
+        }
         if (ElevatorSoundSource != null) {
             // Elevator move sound playing, stop it
             ElevatorSoundSource.Stop();

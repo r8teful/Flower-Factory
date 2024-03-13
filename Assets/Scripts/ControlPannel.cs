@@ -94,7 +94,7 @@ public class ControlPannel : MonoBehaviour {
 
     public void StartPannel() {
         StartCoroutine(MiniGameSequence());
-        var _loopAudio = AudioController.Instance.PlaySound3D("AmbienceControlroom", transform.position, 0.1f, distortion: new AudioParams.Distortion(false, true), looping: true);
+        var _loopAudio = AudioController.Instance.PlaySound3D("AmbienceControlroom", transform.position, 0.4f, distortion: new AudioParams.Distortion(false, true), looping: true);
         _loopAudio.dopplerLevel = 0f;
         _loopAudio.minDistance = 2;
         _loopAudio.maxDistance = 5;

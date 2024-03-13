@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
-  m_Name: SortSeq5
+  m_Name: Office1
   m_EditorClassIdentifier: 
-  interruptBehaviour: 0
+  interruptBehaviour: 2
   lines:
-  - Lets sheck with boss [w:2]
+  - "[w:6]I\u2019ve never been at the control room,[w:0.5] it\u2019s at the back
+    of the factory[w:2]"
+  - I should go there and see if I can help fix the problem[w:2]

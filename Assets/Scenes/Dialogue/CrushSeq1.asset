@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
-  m_Name: SortSeq1
+  m_Name: CrushSeq1
   m_EditorClassIdentifier: 
-  interruptBehaviour: 0
+  interruptBehaviour: 2
   lines:
-  - There we go,[w:0.5] let's get some work done[w:2]
+  - Oh,[w0:.5] my sorted flowers have run out[w:1]
+  - '[w:2]Looks like the supply is still not fixed[w:0.5]'
+  - '[w:4]Let me check with boss,[w:0.5] he should be in his office by now[w:2]'

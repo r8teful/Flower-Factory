@@ -1,14 +1,18 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
-
+    private AlphaLerp _fadeOut;
     protected Button _playButton;
     private void Start() {
+        _fadeOut = GameObject.FindWithTag("FadeOut").GetComponent<AlphaLerp>();
         _playButton = GameObject.FindWithTag("ButtonPlay").GetComponent<Button>();
         if (_playButton != null) _playButton.onClick.AddListener(OnButtonPlayClick);
+        if (_fadeOut != null) _fadeOut.gameObject.SetActive(true);
         SceneHandler.Instance.PlayMainMenuLoop();
+        StartCoroutine(_fadeOut.Fade(true));
     }
 
     private void OnButtonPlayClick() {
@@ -26,5 +30,11 @@ public class MainMenu : MonoBehaviour {
     }
     public void onRateClicked() {
         Application.OpenURL(""); // todo
+    }
+    public IEnumerator FadeOut() {
+        _fadeOut = GameObject.FindWithTag("FadeOut").GetComponent<AlphaLerp>();
+        if (_fadeOut == null) yield break;
+        _fadeOut.gameObject.SetActive(true);
+        yield return StartCoroutine(_fadeOut.GetComponent<AlphaLerp>().Fade(false));
     }
 }

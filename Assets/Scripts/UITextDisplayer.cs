@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UITextDisplayer : StaticInstance<UITextDisplayer> {
@@ -5,7 +6,8 @@ public class UITextDisplayer : StaticInstance<UITextDisplayer> {
     private GameObject _emailText;
     [SerializeField] private Transform _officeTextPosDisplay;
     [SerializeField] private Transform _officeMonitorPosDisplay;
-
+    [SerializeField] private DialogueEventSO dialogueEvent;
+    private bool _dialoguePlayed;
     private void Start() {
         CameraMovement.CurrentCameraPos += CameraPosChanged;
         _officeText = transform.GetChild(0).gameObject;
@@ -26,8 +28,10 @@ public class UITextDisplayer : StaticInstance<UITextDisplayer> {
         }
         if (t == _officeTextPosDisplay) {
             _officeText.SetActive(true);
-        } else if (t== _officeMonitorPosDisplay) {
+        } else if (t== _officeMonitorPosDisplay && !_dialoguePlayed) {
+            _dialoguePlayed = true;
             _emailText.SetActive(true);
+            DialogueManager.Instance.AddDialogueEventToStack(dialogueEvent);
         }
     }
 }

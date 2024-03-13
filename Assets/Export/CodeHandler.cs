@@ -32,6 +32,7 @@ public class CodeHandler : StaticInstance<CodeHandler> {
     }
 
     public void OnEnterButtonClick() {
+        AudioController.Instance.PlaySound3D("click", transform.position, distortion: new AudioParams.Distortion(false, true));
         var code = "";
 
         foreach (int num in GameManager.Instance.Code) {

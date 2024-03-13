@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - I should not leave yet[w:1]
-  - I need to find the code for the control room [w:1]
+  - Someone must have hurt boss[w:1]
+  - I should check his office and look for clues[w:1]

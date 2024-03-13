@@ -15,4 +15,4 @@ MonoBehaviour:
   interruptBehaviour: 0
   lines:
   - Oh,[w:0.5] looks like the supply stopped[w:1.5]
-  - Let's crush flowers instead[w:2]
+  - "I\u2019ll process the flowers until the flower supply is back online[w:2]"

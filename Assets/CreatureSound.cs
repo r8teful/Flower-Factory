@@ -14,7 +14,9 @@ public class CreatureSound : MonoBehaviour {
         transform.position = _outOfCagePos.position;
         StartCoroutine(LoopHitSound());
     }
-
+    public void StopAllSound() {
+        StopAllCoroutines();
+    }
     public void PlaySoundAngry(int i) {
         if (i == 1) {
             AudioController.Instance.PlaySound3D("monsterAngry#1", transform.position, distortion: new AudioParams.Distortion(false, true));

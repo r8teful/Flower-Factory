@@ -18,14 +18,13 @@ public class ConveyorThree : ButtonDevice {
        // StartCoroutine(SpawnFlowers());
     }
     private IEnumerator SpawnFlowers() {
-        while (FlowerSupply) {
-            for (int i = 0; i < _flowerPrefabs.Count; i++) {        
-                var rotation = Quaternion.Euler(150, -90, 180 +Random.Range(-20, 20));
-                var p = Instantiate(_flowerPrefabs[i], _spawnPoints[i].position, rotation, _parentMovement);
-                p.GetComponent<Flower>().IsCrushMode = true;
-                Destroy(p,7f);
-                yield return new WaitForSeconds(_spawnDelay + Random.value);
-            }
+        while (FlowerSupply) {     
+            var rotation = Quaternion.Euler(150, -90, 180 +Random.Range(-20, 20));
+            var i = Random.Range(0, 3);
+            var p = Instantiate(_flowerPrefabs[i], _spawnPoints[i].position, rotation, _parentMovement);
+            p.GetComponent<Flower>().IsCrushMode = true;
+            Destroy(p,7f);
+            yield return new WaitForSeconds(_spawnDelay + Random.value);
         }
     }
 
@@ -35,5 +34,4 @@ public class ConveyorThree : ButtonDevice {
         if (!FlowerSortManager.Instance.GameStarted) return;
         StartCoroutine(SpawnFlowers());
     }
-
 }

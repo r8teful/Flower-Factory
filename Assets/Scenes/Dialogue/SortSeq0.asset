@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - I should press the button[w:2]
+  - '[w:10]I should press the red button to start the conveyor[w:2]'

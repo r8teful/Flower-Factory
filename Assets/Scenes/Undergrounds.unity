@@ -6452,6 +6452,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498768549}
   m_Mesh: {fileID: 4300000, guid: 33044050a7b24994a8a080854ba6d3ac, type: 2}
+--- !u!1 &502209893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 502209895}
+  - component: {fileID: 502209894}
+  m_Layer: 0
+  m_Name: Gamemanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &502209894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502209893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6bc9ceca694d2428ef6e9611e1ee78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugStartFlowerSeq: 0
+  _flowerSortSequencer: {fileID: 0}
+  _code: 
+  _playerProgression: 2
+--- !u!4 &502209895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502209893}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &507998960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11215,6 +11263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueEvents:
   - {fileID: 11400000, guid: 522f6a3e9a5179e47b458c2e9c5d4e5b, type: 2}
+  - {fileID: 11400000, guid: 0e86d42be30d8904da27b455f8560b5e, type: 2}
   waitBeforeNext: 0
   activateWhenComplete: {fileID: 2146944568}
   _enterControlPannel: {fileID: 99883885}
@@ -19166,10 +19215,16 @@ MonoBehaviour:
   dialogueEvents:
   - {fileID: 11400000, guid: 61c34cb160e7a354bb438b8547abdc36, type: 2}
   - {fileID: 11400000, guid: bace0831296da8c46b9713971a2d0171, type: 2}
+  - {fileID: 11400000, guid: 5cc68a9a75d641e4185d2c1068f981a2, type: 2}
   - {fileID: 11400000, guid: f0ec8f00d6c4dd548b1b44bf79a6051a, type: 2}
   - {fileID: 11400000, guid: eaed35292d2da6443a27a82cecec4087, type: 2}
   - {fileID: 11400000, guid: e85e1b83883f9b54fbec6b7047747a62, type: 2}
   - {fileID: 11400000, guid: 616520cf7f0efeb4191759cb2580498e, type: 2}
+  - {fileID: 11400000, guid: 85ef66acd88b9ca49bb47041829c1507, type: 2}
+  - {fileID: 11400000, guid: b42977973f495e34eb8982bb5c78328c, type: 2}
+  - {fileID: 11400000, guid: 8badf7fe4fbbffb439617ce4ddf74a8d, type: 2}
+  - {fileID: 11400000, guid: 1bfc55234a4ff174499874c36c31d7ae, type: 2}
+  - {fileID: 11400000, guid: 6f46fc2809d47224a91b7990767d7bfa, type: 2}
   waitBeforeNext: 0
   activateWhenComplete: {fileID: 0}
   _conveyorThree: {fileID: 1002063312}
@@ -26537,7 +26592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88f97f8aa53d304794aeb9459970047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEvents: []
+  dialogueEvents:
+  - {fileID: 11400000, guid: 181d9f9703a69e540836ea4bf25b9bba, type: 2}
   waitBeforeNext: 0
   activateWhenComplete: {fileID: 0}
   _powerOffSource: {fileID: 4743646103790281858}
@@ -27260,7 +27316,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 96fd15594a2557a40bf9809863e7261c, type: 2}
+  - {fileID: 2100000, guid: ce1626be694fbb340b3f3ab180e7a673, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

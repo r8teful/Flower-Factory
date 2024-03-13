@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
-  m_Name: SortSeq1
+  m_Name: ControlRoom1
   m_EditorClassIdentifier: 
   interruptBehaviour: 0
   lines:
-  - There we go,[w:0.5] let's get some work done[w:2]
+  - There is no fixing this,[w:0.5] I should get out of here before it wakes up[w:1]

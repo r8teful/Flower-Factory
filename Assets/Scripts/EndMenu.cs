@@ -23,5 +23,4 @@ public class EndMenu : MonoBehaviour {
     public void onRateClicked() {
         Application.OpenURL("https://forms.gle/uv7yddLeVHcU8BLM7"); // todo
     }
-
 }

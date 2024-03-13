@@ -22,16 +22,29 @@ public class FlowerSortSequence : Sequencer {
         yield return new WaitUntil(() => _isLookingAtSort);
         _clickAreaLeft.CanInteract = false;
         _clickAreaRight.CanInteract = false;
-        // todo Sorting flowers maybe add dialogue here? 
         yield return new WaitForEndOfFrame(); // im not having anyone getting softlocked 
         CameraMovement.Instance.CurrentView = _sortPosView;
-        yield return new WaitForSeconds(30);
+
+
+        // START SORTING FLOWERS -------------
+        yield return new WaitForSeconds(15f);
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[2]);
+        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+        yield return new WaitForSeconds(5f);
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[8]);
+        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+
+        yield return new WaitForSeconds(4f);
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[9]);
+        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+
+        yield return new WaitForSeconds(10f);
         _conveyorSort.SpawnHand();
         yield return new WaitForSeconds(1.5f);
         AudioController.Instance.PlaySound2D("stingerDark", 0.4f);
         yield return new WaitForSeconds(1.4f);
-        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[2]);
-        yield return new WaitForSeconds(10);
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[3]);
+        yield return new WaitForSeconds(9);
         //yield return new WaitUntil(() => FlowerSortManager.Instance.AmountSorted > 2);
         // BANG, stop supply
 
@@ -46,8 +59,8 @@ public class FlowerSortSequence : Sequencer {
         StartCoroutine(s.Shake(0.5f, 0.04f));
         // wait before we say anything
         yield return new WaitForSeconds(2.42f);
-        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[3]); // That did not sound good
-        yield return new WaitForSeconds(15f); // Play for another little bit
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[4]); // That did not sound good
+        yield return new WaitForSeconds(10f); // Play for another little bit
         _conveyorSort.FlowerSupply = false;
 
 
@@ -56,7 +69,7 @@ public class FlowerSortSequence : Sequencer {
         _clickAreaRight.CanInteract = true;
         yield return new WaitForSeconds(3f); // Wait untill we notice
 
-        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[4]); // Huh, look like the supply stopped, lets start with next
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[5]); // Huh, look like the supply stopped, lets start with next
 
         // Start next task
         _conveyorThree.ButtonClicked();
@@ -67,8 +80,23 @@ public class FlowerSortSequence : Sequencer {
         _clickAreaRight.CanInteract = false;
         yield return new WaitForEndOfFrame();
         CameraMovement.Instance.CurrentView = _crushPosView;
-        //yield return new WaitUntil(() => FlowerSortManager.Instance.AmountCrushed > 10);
-        yield return new WaitForSeconds(30f); // play for x amount of seconds todo maybe more dialogue here
+
+        // CRUSHING FLOWERS ------------------
+
+        yield return new WaitForSeconds(6f); // crush a lil bit and then start rambling again
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[6]);
+        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+        yield return new WaitForSeconds(8f);
+
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[10]);
+        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+        yield return new WaitForSeconds(6f);
+
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[11]);
+        yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
+        yield return new WaitForSeconds(10f);
+
+
         _conveyorThree.FlowerSupply = false;
 
         yield return new WaitForSeconds(2f); // Wait untill we notice
@@ -76,10 +104,10 @@ public class FlowerSortSequence : Sequencer {
         _clickAreaLeft.CanInteract = true;
         _clickAreaRight.CanInteract = true;
         // todo Probably wait a few seconds here
-        yield return new WaitForSeconds(2f); // Wait untill we notice
+        yield return new WaitForSeconds(1f); // Wait untill we notice
 
         // Huh, it stoped. Checkup on boss
-        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[5]);
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[7]);
 
         // DONE
         _elevator.AllowButtonClick(true);

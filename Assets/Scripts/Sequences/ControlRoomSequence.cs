@@ -19,8 +19,10 @@ public class ControlRoomSequence : Sequencer {
         _controlPannel.StartPannel();
         yield return new WaitUntil(() => _hasEnteredControlPannelDoor);
         AudioController.Instance.PlaySound2D("controlRoom", 0.5f);
+
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         FindObjectOfType<CreatureSound>().StartCreatureSound();
-        // TODO DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG
+
     
         yield return new WaitUntil(() => _hasEnteredControlPannel);
         yield return new WaitForEndOfFrame();
@@ -33,14 +35,12 @@ public class ControlRoomSequence : Sequencer {
         yield return new WaitUntil(() => _controlPannel.SequenceComplete);
         _back.CanInteract = true;
         // I should get out of here
-       
-
-        // TODO DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG
+      
 
         _fans[0].Stop();
         _fans[1].Stop();
         yield return new WaitForSeconds(2);
-        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[1]);
         _hasBeenOnStairs = false;
         yield return new WaitUntil(() => _hasBeenOnStairs);
         // Close doors and have them stay closed

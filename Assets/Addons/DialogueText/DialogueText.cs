@@ -32,7 +32,7 @@ public class DialogueText : MonoBehaviour
     [SerializeField]
     public float DIALOGUE_SPEED = 0.1f;
 #else
-    private const float DIALOGUE_SPEED = 0.8f;
+    private const float DIALOGUE_SPEED = 1.1f;
 #endif
 
     [SerializeField]

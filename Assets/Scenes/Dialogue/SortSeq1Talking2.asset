@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaf713cdac54d124eb2f2846d35bc218, type: 3}
-  m_Name: SortSeq1
+  m_Name: SortSeq1Talking2
   m_EditorClassIdentifier: 
-  interruptBehaviour: 0
+  interruptBehaviour: 2
   lines:
-  - There we go,[w:0.5] let's get some work done[w:2]
+  - "A surprising amount actually,[w:0.5] I\u2019ve always wondered why[w:4]"
+  - "Sorting flowers can\u2019t be that important[w:1]"

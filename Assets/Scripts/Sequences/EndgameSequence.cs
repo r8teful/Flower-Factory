@@ -25,17 +25,21 @@ public class EndgameSequence : Sequencer {
         monster.PlaySoundAngry(5);// angry sound
         yield return new WaitForSeconds(5);
         AudioController.Instance.PlaySound3D("itsEscaping", _powerOffSource.position, distortion: new AudioParams.Distortion(false, true));
-        CameraMovement.Instance.LockMovement = false; 
+        CameraMovement.Instance.LockMovement = false;
+
         yield return new WaitForSeconds(6);
         monster.PlaySoundAngry(1);// angry sound
         monster.StartHitSound();
+        DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitForSeconds(4);
         monster.PlaySoundAngry(4);// angry sound
         monster.StartCreatureSoundAngry();
         yield return new WaitUntil(() => _hasEnteredexplosionPos);
         AudioController.Instance.PlaySound3D("wallBreak", _powerOffSource.position, distortion: new AudioParams.Distortion(false, true));
         _blackScreen.enabled = true;
-        yield return new WaitForSeconds(4);
+        // todo stop mosnter sound
+        monster.StopAllSound();
+        yield return new WaitForSeconds(8);
         SceneHandler.Instance.LoadEndMenu();
     }
 
