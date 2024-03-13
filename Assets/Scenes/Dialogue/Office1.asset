@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interruptBehaviour: 2
   lines:
-  - "[w:4]I\u2019ve never been at the control room,[w:0.5] it\u2019s at the back
+  - "[w:4]I\u2019ve never been to the control room,[w:0.5] it\u2019s at the back
     of the factory[w:2]"
   - I should go there and see if I can help fix the problem[w:2]

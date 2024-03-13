@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
     private AlphaLerp _fadeOut;
+    private Slider _volumeSlider;
     protected Button _playButton;
     private void Start() {
         _fadeOut = GameObject.FindWithTag("FadeOut").GetComponent<AlphaLerp>();
         _playButton = GameObject.FindWithTag("ButtonPlay").GetComponent<Button>();
+        _volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
         if (_playButton != null) _playButton.onClick.AddListener(OnButtonPlayClick);
         if (_fadeOut != null) _fadeOut.gameObject.SetActive(true);
         SceneHandler.Instance.PlayMainMenuLoop();
         StartCoroutine(_fadeOut.Fade(true));
+
     }
 
     private void OnButtonPlayClick() {
@@ -30,6 +33,10 @@ public class MainMenu : MonoBehaviour {
     }
     public void onRateClicked() {
         Application.OpenURL("https://r8teful.itch.io/flower-factory/rate");
+    }
+
+    public void OnChangeVolume() {
+        AudioListener.volume = _volumeSlider.value;
     }
     public IEnumerator FadeOut() {
         _fadeOut = GameObject.FindWithTag("FadeOut").GetComponent<AlphaLerp>();

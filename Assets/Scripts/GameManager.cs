@@ -32,7 +32,6 @@ public class GameManager : PersistentSingleton<GameManager> {
     }
 
     private void OnDestroy() {
-        Debug.Log("OnDestroy");
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
     private void Start() {

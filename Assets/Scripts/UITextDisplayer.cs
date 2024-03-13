@@ -32,6 +32,8 @@ public class UITextDisplayer : StaticInstance<UITextDisplayer> {
             _dialoguePlayed = true;
             _emailText.SetActive(true);
             DialogueManager.Instance.AddDialogueEventToStack(dialogueEvent);
+        } else if (t == _officeMonitorPosDisplay) {
+            _emailText.SetActive(true);
         }
     }
 }
