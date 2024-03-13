@@ -221,7 +221,6 @@ public class ControlPannel : MonoBehaviour {
         while (!MinigameStarted) {
             _emergencyObject.SetActive(false);
             yield return new WaitForSeconds(0.25f);
-            // todo beeping here
             _emergencyObject.SetActive(true);
             var a = AudioController.Instance.PlaySound3D("warning", transform.position, 0.6f);
             a.dopplerLevel = 0;

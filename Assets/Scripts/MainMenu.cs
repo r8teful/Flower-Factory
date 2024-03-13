@@ -26,10 +26,10 @@ public class MainMenu : MonoBehaviour {
         SceneHandler.Instance.StartGame();
     }
     public void onOneSocketClicked() {
-        Application.OpenURL("https://r8teful.itch.io/onesocket"); // todo
+        Application.OpenURL("https://r8teful.itch.io/onesocket"); 
     }
     public void onRateClicked() {
-        Application.OpenURL(""); // todo
+        Application.OpenURL("https://r8teful.itch.io/flower-factory/rate");
     }
     public IEnumerator FadeOut() {
         _fadeOut = GameObject.FindWithTag("FadeOut").GetComponent<AlphaLerp>();

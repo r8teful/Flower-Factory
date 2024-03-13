@@ -47,7 +47,11 @@ public class OfficeSequence : Sequencer {
         }
     }
 
-    private void Awake() => CameraMovement.CurrentCameraView += CameraViewChanged;
+    private void Awake() {
+        if (GameManager.Instance.PlayerProgression < 2) return;
+        CameraMovement.CurrentCameraView += CameraViewChanged;
+    
+    }
     private void OnDestroy() => CameraMovement.CurrentCameraView -= CameraViewChanged;
     private void CameraViewChanged(Transform t) {
         // todo do the dialogue calls here

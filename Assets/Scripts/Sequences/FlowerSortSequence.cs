@@ -103,7 +103,6 @@ public class FlowerSortSequence : Sequencer {
 
         _clickAreaLeft.CanInteract = true;
         _clickAreaRight.CanInteract = true;
-        // todo Probably wait a few seconds here
         yield return new WaitForSeconds(1f); // Wait untill we notice
 
         // Huh, it stoped. Checkup on boss

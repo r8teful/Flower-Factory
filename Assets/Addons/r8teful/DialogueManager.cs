@@ -66,7 +66,6 @@ public class DialogueManager : Singleton<DialogueManager> {
         //string[] vowels = { "Am", "Im", "Om", "Em", "Um" };
         //int randomIndex = Random.Range(0, vowels.Length);
         //string selectedVowel = vowels[randomIndex];
-        // TODO hardcored player position
         if (DialogueSpeaker.Equals(Speaker.Me)) {
             AudioController.Instance.PlaySound2D("a",
                 repetition: new AudioParams.Repetition(0.075f), randomization: new AudioParams.Randomization(true));

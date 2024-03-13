@@ -72,9 +72,11 @@ public class Elevator : ButtonDevice {
             _elevatorMovingStart = AudioController.Instance.PlaySound3D("ElevatorMovingStart", transform.position, 0.5f);
             AudioController.Instance.FadeOutLoop(4,0); // We are going away from whereever we are stop the sound!
             StartCoroutine(WaitForElevatorMove());
+            
+        } else {
+            // You are free to leave and go about your day
+            CameraMovement.Instance.LockMovement = false;
         }
-        // You are free to leave and go about your day
-        CameraMovement.Instance.LockMovement = false;
     }
 
     private IEnumerator WaitForElevatorMove() {

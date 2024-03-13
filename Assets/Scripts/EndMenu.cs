@@ -18,9 +18,9 @@ public class EndMenu : MonoBehaviour {
     }
 
     public void onOneSocketClicked() {
-        Application.OpenURL("https://forms.gle/uv7yddLeVHcU8BLM7"); // todo
+        Application.OpenURL("https://r8teful.itch.io/onesocket"); 
     }
     public void onRateClicked() {
-        Application.OpenURL("https://forms.gle/uv7yddLeVHcU8BLM7"); // todo
+        Application.OpenURL("https://r8teful.itch.io/flower-factory/rate"); 
     }
 }

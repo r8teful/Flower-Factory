@@ -96,7 +96,6 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
                     CursorManager.Instance.CurrentCursorType = CursorManager.CursorType.Default;
                 break;
             default:
-                // Todo add other?
                 break;
         }
     }

@@ -11,7 +11,6 @@ public class EndgameSequence : Sequencer {
     protected override IEnumerator Sequence() {
         var monster = FindObjectOfType<CreatureSound>();
         Debug.Log("Endgame Start");
-        // Todo posibly lock movement
         CameraMovement.Instance.LockMovement = true; 
         CameraMovement.Instance.SetMoveSpeed(6); // half the move speed
 
@@ -30,6 +29,7 @@ public class EndgameSequence : Sequencer {
         yield return new WaitForSeconds(6);
         monster.PlaySoundAngry(1);// angry sound
         monster.StartHitSound();
+        yield return new WaitForSeconds(2.24f);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitForSeconds(4);
         monster.PlaySoundAngry(4);// angry sound
@@ -37,7 +37,6 @@ public class EndgameSequence : Sequencer {
         yield return new WaitUntil(() => _hasEnteredexplosionPos);
         AudioController.Instance.PlaySound3D("wallBreak", _powerOffSource.position, distortion: new AudioParams.Distortion(false, true));
         _blackScreen.enabled = true;
-        // todo stop mosnter sound
         monster.StopAllSound();
         yield return new WaitForSeconds(8);
         SceneHandler.Instance.LoadEndMenu();

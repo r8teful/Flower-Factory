@@ -103,7 +103,6 @@ public class GameManager : PersistentSingleton<GameManager> {
         }
         if (progress == 4) {
             // Underground second time
-            // todo actiavte other sequence, etc etc.
 
             GameObject.Find("UndergroundIntroSequence").GetComponent<UndergroundIntroSequence>().enabled = false;
             GameObject.Find("ControlRoomSequence").GetComponent<ControlRoomSequence>().enabled = true;
