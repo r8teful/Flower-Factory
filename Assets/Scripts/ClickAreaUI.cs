@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
     [SerializeField] MovementDirection movementDirection;
     private Image _image;
     private bool _canInteract = true;
+    private bool _lock;
 
     // Todo we have to set interactions true or false depening on the state we are on CameraMovement
     // For example, if we are peeking we only show back, only show forward if we can go forward etc etc.
@@ -15,12 +17,21 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
         set { _canInteract = value;
         if(_image == null) _image = GetComponent<Image>();
             _image.enabled = value;
+            Debug.Log(value);
         }
     }
+
+    public bool Lock { get => _lock; set { 
+        _lock = value; 
+        StopAllCoroutines();
+        }
+    } 
 
     private void Awake() {
         _image = GetComponent<Image>();
         CameraMovement.CurrentCameraPeek += OnCameraPeekChanged;
+        if(movementDirection.Equals(MovementDirection.Down))
+            CanInteract = false;
     }
     private void OnDestroy() {
         CameraMovement.CurrentCameraPeek -= OnCameraPeekChanged;
@@ -28,15 +39,21 @@ public class ClickAreaUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHand
 
     private void OnCameraPeekChanged(bool b) {
         // We are on a peekpos, and we should enable down image
+        if (_lock) return;
         if (movementDirection.Equals(MovementDirection.Down)) {
-            CanInteract = b;
+            StartCoroutine(SetInteractDelay(b)); // NEed to do this because when we press peek, we need to actually move there before setting the value to true.
+            // Otherwise we can already click on the back one in the same click for some reason
         } else {
             CanInteract = !b;
         }
     }
+    private IEnumerator SetInteractDelay(bool b) {
+        yield return new WaitForSeconds(1f);
+        CanInteract = b;
+    }
 
     public void OnPointerDown(PointerEventData eventData) {
-       // if (!_canInteract) return;
+        if (!_canInteract) return;
         switch (movementDirection) {
             case MovementDirection.Left:
                 CameraMovement.Instance.MoveCameraLeft();

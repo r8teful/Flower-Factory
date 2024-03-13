@@ -16,4 +16,4 @@ MonoBehaviour:
   lines:
   - Oh,[w0:.5] my sorted flowers have run out[w:1]
   - '[w:2]Looks like the supply is still not fixed[w:0.5]'
-  - '[w:4]Let me check with boss,[w:0.5] he should be in his office by now[w:2]'
+  - '[w:2]Let me check with boss,[w:0.5] he should be in his office by now[w:2]'

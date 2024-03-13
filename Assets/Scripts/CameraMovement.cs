@@ -75,7 +75,7 @@ public class CameraMovement : StaticInstance<CameraMovement> {
     private void Start() {
         PopulatePlayerPositions();
         _currentPos = _positions[GameManager.Instance.GetCameraStartPosIndex()];
-        //_currentPos = _positions[_positions.Count-1];
+        //_currentPos = _positions[_positions.Count-3];
         CurrentView = _currentPos.GetChild(_viewIndex);
         transform.position = _currentPos.position;
     }
@@ -142,10 +142,11 @@ public class CameraMovement : StaticInstance<CameraMovement> {
       
     }
 
-    public void CameraPeek() {
+    public void CameraPeek(Transform t) {
         if (CurrentView == null || _peeking) return;
         if (CurrentView.childCount <= 0) return;
         if (_targetPos != null) return; // Still moving
+        if (t.parent != CurrentView) return; // We are clicking on a different view collider
         // Save current pos and view so we can go back to it later
         Peeking = true;
         _prevPos = _currentPos;
@@ -184,7 +185,8 @@ public class CameraMovement : StaticInstance<CameraMovement> {
         return _peeking;
     }
 
-    public bool CanPeek() {
+    public bool CanPeek(Transform t) {
+        if (t.parent != CurrentView) return false; // We are clicking on a different view collider
         if (CurrentView == null || _peeking) return false;
         if (CurrentView.childCount <= 0) return false;
         return true;

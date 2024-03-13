@@ -7,6 +7,7 @@ public class LobbySequence : Sequencer {
     [SerializeField] private Transform _officeLook;
     [SerializeField] private Transform _elevatorLook;
     [SerializeField] private GameObject _officeWallsAndFloors;
+    [SerializeField] private GameObject _key;
     [SerializeField] private float _movementSpeed;
     private bool _lookedAtDoor;
     private bool _lookedAtOffice;
@@ -15,6 +16,7 @@ public class LobbySequence : Sequencer {
     protected override IEnumerator Sequence() {
         Debug.Log("Lobby sequence start");
         if (GameManager.Instance.PlayerProgression >= 2) yield break;
+        Instantiate(_key);
         _elevatorLook.gameObject.SetActive(false);
         DialogueManager.Instance.AddDialogueEventToStack(dialogueEvents[0]);
         yield return new WaitUntil(() => DialogueManager.Instance.NoDialoguePlaying);
